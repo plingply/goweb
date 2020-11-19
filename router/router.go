@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gogf/gf-demos/app/api/curd"
 	"github.com/gogf/gf-demos/app/api/user"
-	"github.com/gogf/gf-demos/app/service/middleware"
+	"github.com/gogf/gf-demos/app/middleware"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
