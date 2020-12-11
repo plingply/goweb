@@ -1,41 +1,33 @@
-# HTTP Server配置
+# HTTP Server
 [server]
-	Address        = ":8199"
-	ServerRoot     = "public"
-	ServerAgent    = "gf-demos"
-	LogPath        = "/www/wwwroot/golang/src/log/goframe/server"
-	NameToUriType  = 2
-	RouteOverWrite = true
+	Address     = ":8199"
+	ServerRoot  = "public"
+	ServerAgent = "gf-app"
+	LogPath     = "/tmp/log/gf-app/server"
 
-# 全局日志配置
+# Logger.
 [logger]
-    Path   = "/www/wwwroot/golang/src/log/goframe/glob"
-    Level  = "all"
-    Stdout = true
+    Path        = "/tmp/log/gf-app"
+    Level       = "all"
+    Stdout      = true
 
-# 模板引擎配置
+# Template.
 [viewer]
     Path        = "template"
     DefaultFile = "index.html"
     Delimiters  =  ["${", "}"]
 
-# 数据库连接
+# Database.
 [database]
-    link  = "mysql:goframe:plingply95@tcp(127.0.0.1:3306)/goframe"
+    type = "mysql"
+    user = "goframe"
+    pwd = "plingply95"
+    host = "119.29.133.60"
+    port = 3306
+    tablename = "goframe"
     debug = true
-    # 数据库日志对象配置
+    # Database logger.
     [database.logger]
-        Path   = "/tmp/log/gf-demos/sql"
+        Path   = "/tmp/log/gf-app/sql"
         Level  = "all"
         Stdout = true
-
-# swagger api页面查看账号密码
-[swagger]
-    user        = "root"
-    pass        = "111111"
-    schemes     = ["http"]
-    version     = "1.0"
-    title       = "示例服务API"
-    description = """
-`GoFrame`基础开发框架示例服务API接口文档。
-    """

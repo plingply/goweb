@@ -1,11 +1,13 @@
 package main
 
 import (
-	_ "github.com/gogf/gf-demos/boot"
-	_ "github.com/gogf/gf-demos/router"
+	_ "goframe-web/boot"
+	_ "goframe-web/router"
 	"github.com/gogf/gf/frame/g"
 )
 
 func main() {
+
+	//启动服务
 	g.Server().Run()
 }

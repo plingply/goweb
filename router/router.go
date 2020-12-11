@@ -1,31 +1,30 @@
 package router
 
 import (
-	"github.com/gogf/gf-demos/app/api/curd"
-	"github.com/gogf/gf-demos/app/api/user"
-	"github.com/gogf/gf-demos/app/middleware"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
+	"goframe-web/app/api/hello"
+	"goframe-web/app/api/user"
+	"goframe-web/app/middleware"
 )
 
-// 你可以将路由注册放到一个文件中管理，
-// 也可以按照模块拆分到不同的文件中管理，
-// 但统一都放到router目录下。
 func init() {
 	s := g.Server()
 
+	s.Use(middleware.MiddlewareErrorHandler)
+	s.Use(middleware.CORS)
 	// 某些浏览器直接请求favicon.ico文件，特别是产生404时
 	s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 
-	// 分组路由注册方式
 	s.Group("/", func(group *ghttp.RouterGroup) {
-		ctlUser := new(user.Controller)
-		group.Middleware(middleware.CORS)
-		group.ALL("/user", ctlUser)
-		group.ALL("/curd/:table", new(curd.Controller))
-		group.Group("/", func(group *ghttp.RouterGroup) {
-			group.Middleware(middleware.Auth)
-			group.ALL("/user/profile", ctlUser, "Profile")
-		})
+		group.ALL("/", hello.Hello)
+	})
+
+	s.Group("/api", func(group *ghttp.RouterGroup) {
+		group.POST("/login", user.Login)
+		group.POST("/user/signup", user.SignUp)
+		group.Middleware(middleware.JWTAuth)
+		group.GET("/user/info", user.Info)
+		group.POST("/user/update", user.UpdateInfo)
 	})
 }
