@@ -36,9 +36,9 @@ func Info(r *ghttp.Request) {
 }
 
 // 修改用户信息
-func UpdateInfo(r *ghttp.Request)  {
+func UpdateInfo(r *ghttp.Request) {
 
-	var reqMap  = make(map[string]interface{})
+	var reqMap = make(map[string]interface{})
 	id := r.GetFormUint("id")
 
 	if r.GetFormBool("nickname") {
@@ -57,7 +57,7 @@ func UpdateInfo(r *ghttp.Request)  {
 }
 
 // 登录
-func Login(r *ghttp.Request)  {
+func Login(r *ghttp.Request) {
 	passport := r.GetFormString("passport")
 	password := r.GetFormString("password")
 	if result, err := user.Login(passport, password); err != nil {
@@ -65,4 +65,9 @@ func Login(r *ghttp.Request)  {
 	} else {
 		response.JsonExit(r, 0, "ok", result)
 	}
+}
+
+// 退出
+func Signout(r *ghttp.Request) {
+
 }

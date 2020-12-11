@@ -3,13 +3,13 @@ package user
 import (
 	"errors"
 	"fmt"
+	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 	"goframe-web/app/model"
-	"goframe-web/library/md5x"
 	"goframe-web/library/jwt"
+	"goframe-web/library/md5x"
 	"time"
-	jwtgo "github.com/dgrijalva/jwt-go"
 )
 
 const (
@@ -29,16 +29,26 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 
 	// 将输入参数赋值到数据库实体对象上
 	var user *model.User
-	if err := gconv.Struct(param,&user); err != nil {
+	if err := gconv.Struct(param, &user); err != nil {
 		return nil, err
 	}
 	md5str := md5x.GetMD5String(user.Password)
 	user.Password = md5str
 	result, err := user.Save()
+
+	// 创建usertoken
+	var userToken model.UserToken
+	userToken.UserId = result.Id
+	_, e := userToken.Save()
+
+	if e != nil {
+		return nil, e
+	}
+
 	return result, err
 }
 
-// 判断用户是否已经登录
+// 检查账号是否存在
 func CheckPassport(passport string) bool {
 	var user model.User
 	userInfo := user.GetUserInfoByPassport(passport)
@@ -54,11 +64,12 @@ func IsSignedIn(session *ghttp.Session) bool {
 }
 
 // 更新用户信息
-func Update(id uint, reqMap map[string]interface{}) error{
+func Update(id uint, reqMap map[string]interface{}) error {
 	lu, err := GetUserInfo(id)
-	 if err != nil {
-	 	return err
-	 }
+	if err != nil {
+		return err
+	}
+	reqMap["password"] = md5x.GetMD5String(reqMap["password"].(string))
 	_, err = lu.Update(reqMap)
 	return err
 }
@@ -74,7 +85,7 @@ func GetUserInfo(id uint) (*model.User, error) {
 }
 
 // 登录系统
-func Login(passport string, password string) (token string, err error){
+func Login(passport string, password string) (token string, err error) {
 
 	if passport == "" || password == "" {
 		return "", errors.New("参数错误")
@@ -91,13 +102,22 @@ func Login(passport string, password string) (token string, err error){
 	}
 
 	var claims jwt.CustomClaims
-	claims.Username = user.Passport
+	claims.Username = userInfo.Passport
+	claims.Userid = userInfo.Id
 	claims.StandardClaims = jwtgo.StandardClaims{
-		NotBefore: int64(time.Now().Unix() - 1000), // 签名生效时间
+		NotBefore: int64(time.Now().Unix() - 1000),        // 签名生效时间
 		ExpiresAt: int64(time.Now().Unix() + 3600*24*365), // 过期时间 一小时
-		Issuer:    jwt.GetSignKey(),                   //签名的发行者
+		Issuer:    jwt.GetSignKey(),                       //签名的发行者
 	}
 	mjwt := jwt.NewJWT()
 	token, err = mjwt.CreateToken(claims)
+
+	// 更新 token
+	var usertoken model.UserToken
+	_, e := usertoken.Update(userInfo.Id, token)
+	if e != nil {
+		err = e
+		return
+	}
 	return
 }

@@ -3,11 +3,12 @@ package middleware
 import (
 	"fmt"
 	"github.com/gogf/gf/net/ghttp"
+	"goframe-web/app/model"
 	"goframe-web/library/jwt"
 	"goframe-web/library/response"
 )
 
-// JWTAuth 中间件，检查token
+// JWTAuth 中间件，检查token 1
 func JWTAuth(r *ghttp.Request) {
 	token := r.GetQueryString("token")
 	if token == "" {
@@ -20,6 +21,7 @@ func JWTAuth(r *ghttp.Request) {
 	if token == "" {
 		response.JsonExit(r, 1, "身份已过期")
 	}
+
 	j := jwt.NewJWT()
 	// parseToken 解析token包含的信息
 	claims, err := j.ParseToken(token)
@@ -28,7 +30,17 @@ func JWTAuth(r *ghttp.Request) {
 			response.JsonExit(r, 1, "授权已过期")
 		}
 		response.JsonExit(r, 1, err.Error())
+
 	}
 	r.SetCtxVar("username", claims.Username)
+	r.SetCtxVar("user_id", claims.Userid)
+
+	// 验证系统token
+	userId := r.GetCtxVar("user_id").Uint()
+	var usertoken model.UserToken
+	if bol := usertoken.Vtoken(userId, token); !bol {
+		response.JsonExit(r, 1, "身份已过期")
+	}
+
 	r.Middleware.Next()
 }

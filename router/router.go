@@ -22,9 +22,10 @@ func init() {
 
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.POST("/login", user.Login)
-		group.POST("/user/signup", user.SignUp)
+		group.POST("/signup", user.SignUp)
 		group.Middleware(middleware.JWTAuth)
 		group.GET("/user/info", user.Info)
+		group.GET("/signout", user.Signout)
 		group.POST("/user/update", user.UpdateInfo)
 	})
 }
