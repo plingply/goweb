@@ -59,6 +59,7 @@ func Update(id uint, reqMap map[string]interface{}) error{
 	 if err != nil {
 	 	return err
 	 }
+	reqMap["password"] = md5x.GetMD5String(reqMap["password"].(string))
 	_, err = lu.Update(reqMap)
 	return err
 }
