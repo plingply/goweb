@@ -26,6 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65affd7a-25fd-4f5b-a1c2-cac3534ff1c5" name="默认的" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/app/model/user_token.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/user/user.go" afterDir="false" />
@@ -36,6 +37,10 @@
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/library/jwt/gwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/library/jwt/gwt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/router.go" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/service/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/user/user.go" afterDir="false" />
+>>>>>>> origin/master
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

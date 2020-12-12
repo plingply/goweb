@@ -3,13 +3,13 @@ package user
 import (
 	"errors"
 	"fmt"
-	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 	"goframe-web/app/model"
-	"goframe-web/library/jwt"
 	"goframe-web/library/md5x"
+	"goframe-web/library/jwt"
 	"time"
+	jwtgo "github.com/dgrijalva/jwt-go"
 )
 
 const (
