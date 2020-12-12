@@ -3,13 +3,13 @@ package user
 import (
 	"errors"
 	"fmt"
+	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 	"goframe-web/app/model"
-	"goframe-web/library/md5x"
 	"goframe-web/library/jwt"
+	"goframe-web/library/md5x"
 	"time"
-	jwtgo "github.com/dgrijalva/jwt-go"
 )
 
 const (
@@ -74,7 +74,7 @@ func Update(id uint, reqMap map[string]interface{}) error {
 	return err
 }
 
-// 获得用户信息详情
+// 获得用户信息详情 1
 func GetUserInfo(id uint) (*model.User, error) {
 	var user model.User
 	if id == 0 {
