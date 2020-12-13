@@ -36,7 +36,7 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 	user.Password = md5str
 	result, err := user.Save()
 
-	// 创建usertoken
+	// 创建usertoken 1
 	var userToken model.UserToken
 	userToken.UserId = result.Id
 	_, e := userToken.Save()
@@ -120,4 +120,15 @@ func Login(passport string, password string) (token string, err error) {
 		return
 	}
 	return
+}
+
+// 退出
+func Signout(userid uint) error{
+	// 更新 token
+	var usertoken model.UserToken
+	_, e := usertoken.Update(userid, "")
+	if e != nil {
+		return e
+	}
+	return nil
 }

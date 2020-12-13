@@ -69,5 +69,10 @@ func Login(r *ghttp.Request) {
 
 // 退出
 func Signout(r *ghttp.Request) {
-
+	userid := r.GetCtxVar("user_id").Uint()
+	if err := user.Signout(userid); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "ok", nil)
+	}
 }

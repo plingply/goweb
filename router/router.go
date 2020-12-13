@@ -25,7 +25,7 @@ func init() {
 		group.POST("/signup", user.SignUp)
 		group.Middleware(middleware.JWTAuth)
 		group.GET("/user/info", user.Info)
-		group.GET("/signout", user.Signout)
+		group.POST("/signout", user.Signout)
 		group.POST("/user/update", user.UpdateInfo)
 	})
 }
