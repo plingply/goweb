@@ -3,13 +3,14 @@ package user
 import (
 	"errors"
 	"fmt"
-	jwtgo "github.com/dgrijalva/jwt-go"
-	"github.com/gogf/gf/net/ghttp"
-	"github.com/gogf/gf/util/gconv"
 	"goframe-web/app/model"
 	"goframe-web/library/jwt"
 	"goframe-web/library/md5x"
 	"time"
+
+	jwtgo "github.com/dgrijalva/jwt-go"
+	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/util/gconv"
 )
 
 const (
@@ -103,11 +104,7 @@ func Login(passport string, password string) (token string, err error) {
 
 	var claims jwt.CustomClaims
 	claims.Username = userInfo.Passport
-<<<<<<< HEAD
-	claims.UserId = userInfo.Id
-=======
 	claims.Userid = userInfo.Id
->>>>>>> 06510335388d719b9056f8e305ef45d0dd6ff4f3
 	claims.StandardClaims = jwtgo.StandardClaims{
 		NotBefore: int64(time.Now().Unix() - 1000),        // 签名生效时间
 		ExpiresAt: int64(time.Now().Unix() + 3600*24*365), // 过期时间 一小时
@@ -127,7 +124,7 @@ func Login(passport string, password string) (token string, err error) {
 }
 
 // 退出
-func Signout(userid uint) error{
+func Signout(userid uint) error {
 	// 更新 token
 	var usertoken model.UserToken
 	_, e := usertoken.Update(userid, "")
