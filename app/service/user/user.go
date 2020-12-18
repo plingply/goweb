@@ -65,8 +65,8 @@ func Update(id uint, reqMap map[string]interface{}) error{
 }
 
 // 获得用户信息详情
-func GetUserInfo(id uint) (*model.User, error) {
-	var user model.User
+func GetUserInfo(id uint) (*model.UserRoles, error) {
+	var user model.UserRoles
 	if id == 0 {
 		return nil, errors.New("参数错误")
 	}
@@ -92,7 +92,8 @@ func Login(passport string, password string) (token string, err error){
 	}
 
 	var claims jwt.CustomClaims
-	claims.Username = user.Passport
+	claims.Username = userInfo.Passport
+	claims.UserId = userInfo.Id
 	claims.StandardClaims = jwtgo.StandardClaims{
 		NotBefore: int64(time.Now().Unix() - 1000), // 签名生效时间
 		ExpiresAt: int64(time.Now().Unix() + 3600*24*365), // 过期时间 一小时

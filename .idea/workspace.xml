@@ -27,7 +27,11 @@
   <component name="ChangeListManager">
     <list default="true" id="65affd7a-25fd-4f5b-a1c2-cac3534ff1c5" name="默认的" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/service/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/jwt/gwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/library/jwt/gwt.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +88,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -93,5 +98,9 @@
       <screen x="0" y="25" width="1680" height="954" />
     </state>
     <state x="590" y="302" key="#Go_模块/0.25.1680.954@0.25.1680.954" timestamp="1607668876305" />
+    <state x="585" y="115" width="749" height="924" key="find.popup" timestamp="1608269341685">
+      <screen x="0" y="25" width="1920" height="1104" />
+    </state>
+    <state x="585" y="115" width="749" height="924" key="find.popup/0.25.1920.1104/1920.25.1920.1055@0.25.1920.1104" timestamp="1608269341685" />
   </component>
 </project>

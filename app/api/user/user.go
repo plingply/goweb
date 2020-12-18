@@ -28,6 +28,11 @@ func SignUp(r *ghttp.Request) {
 // 用户详情
 func Info(r *ghttp.Request) {
 	id := r.GetQueryUint("id")
+
+	if id == 0 {
+		id = r.GetCtxVar("user_id").Uint()
+	}
+
 	if result, err := user.GetUserInfo(id); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	} else {

@@ -25,10 +25,12 @@ func JWTAuth(r *ghttp.Request) {
 	claims, err := j.ParseToken(token)
 	if err != nil {
 		if err == jwt.TokenExpired {
-			response.JsonExit(r, 1, "授权已过期")
+			response.JsonExit(r, 50008, err.Error())
 		}
-		response.JsonExit(r, 1, err.Error())
+		response.JsonExit(r, 50012, err.Error())
 	}
+	fmt.Println("claims:", claims)
 	r.SetCtxVar("username", claims.Username)
+	r.SetCtxVar("user_id", claims.UserId)
 	r.Middleware.Next()
 }
