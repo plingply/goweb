@@ -2,9 +2,10 @@ package model
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/gogf/gf/frame/g"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 var db *gorm.DB
@@ -45,6 +46,10 @@ func Createtable() {
 	GetDB().AutoMigrate(
 		&User{},
 		&UserToken{},
+		&School{},
+		&Campus{},
+		&CampusSchool{},
+		&SchoolUser{},
 	)
 }
 

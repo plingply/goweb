@@ -1,11 +1,13 @@
 package router
 
 import (
-	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/gf/net/ghttp"
 	"goframe-web/app/api/hello"
+	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/user"
 	"goframe-web/app/middleware"
+
+	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/net/ghttp"
 )
 
 func init() {
@@ -27,5 +29,6 @@ func init() {
 		group.GET("/user/info", user.Info)
 		group.POST("/signout", user.Signout)
 		group.POST("/user/update", user.UpdateInfo)
+		group.GET("/school/list", school_user.GetSchoolList)
 	})
 }
