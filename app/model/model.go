@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-
 var db *gorm.DB
 
 func GetDB() *gorm.DB {
@@ -45,6 +44,7 @@ func init() {
 func Createtable() {
 	GetDB().AutoMigrate(
 		&User{},
+		&UserToken{},
 	)
 }
 
