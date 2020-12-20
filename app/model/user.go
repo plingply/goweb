@@ -9,9 +9,9 @@ import (
 type User struct {
 	Id       uint   `gorm:"AUTO_INCREMENT" json:"id"`                // 用户ID
 	Passport string `gorm:"passport;unique_index"   json:"passport"` // 用户账号
-	Password string `gorm:"password"   json:"-"`                     // 用户密码
-	Nickname string `gorm:"nickname"   json:"nickname"`              // 用户昵称
-	Avatar   string `gorm:"avatar"     json:"avatar"`                // 用户头像
+	Password string `gorm:"password;size:100"   json:"-"`            // 用户密码
+	Nickname string `gorm:"nickname;size:10"   json:"nickname"`      // 用户昵称
+	Avatar   string `gorm:"avatar;szie:255"     json:"avatar"`       // 用户头像
 	Model
 }
 

@@ -1,6 +1,7 @@
 package router
 
 import (
+	"goframe-web/app/api/campus"
 	"goframe-web/app/api/hello"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/user"
@@ -29,6 +30,16 @@ func init() {
 		group.GET("/user/info", user.Info)
 		group.POST("/signout", user.Signout)
 		group.POST("/user/update", user.UpdateInfo)
+
 		group.GET("/school/list", school_user.GetSchoolList)
+
+		group.GET("/school/campus/list", campus.GetCampusList)
+		group.GET("/school/campus/simple/list", campus.GetCampusSimpleList)
+		group.POST("/school/campus/update", campus.UpdateCampus)
+		group.POST("/school/campus/create", campus.CreateCampus)
+
+		group.GET("/teacher/list", school_user.GetTeacherList)
+		group.POST("/teacher/update", school_user.UpdateTeacher)
+		group.POST("/teacher/create", school_user.CreateTeacher)
 	})
 }
