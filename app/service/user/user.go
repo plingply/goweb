@@ -24,7 +24,7 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 		param.Nickname = param.Passport
 	}
 	// 账号唯一性数据检查
-	if CheckPassport(param.Passport) {
+	if ok, _ := CheckPassport(param.Passport); ok {
 		return nil, errors.New(fmt.Sprintf("账号 %s 已经存在", param.Passport))
 	}
 
@@ -50,13 +50,13 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 }
 
 // 检查账号是否存在
-func CheckPassport(passport string) bool {
+func CheckPassport(passport string) (bool, uint) {
 	var user model.User
 	userInfo := user.GetUserInfoByPassport(passport)
 	if userInfo.Id != 0 {
-		return true
+		return true, userInfo.Id
 	}
-	return false
+	return false, 0
 }
 
 // 判断用户是否已经登录

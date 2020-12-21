@@ -3,6 +3,7 @@ package school_user
 import (
 	"errors"
 	"goframe-web/app/model"
+	"goframe-web/app/service/user"
 )
 
 type SchoolListByUser struct {
@@ -21,6 +22,9 @@ func GetTeacherList(schoolId, campusId, page, Limit uint) (result interface{}, t
 
 	if schoolId == 0 {
 		return nil, 0, errors.New("学校id不能为空")
+	}
+	if campusId == 0 {
+		return nil, 0, errors.New("校区id不能为空")
 	}
 	if page <= 0 {
 		return nil, 0, errors.New("参数错误")
@@ -52,8 +56,40 @@ func CreateTeacher(campusId uint, schoolUser *model.SchoolUser) (re bool, msg er
 		return false, errors.New("参数错误")
 	}
 
+	// 账号唯一性数据检查
+	if ok := CheckTeacher(campusId, schoolUser.Phone); ok {
+		return false, errors.New("老师已经存在")
+	}
+
+	// 判断是否已经存在user
+	ok, user_id := user.CheckPassport(schoolUser.Phone)
+	if ok {
+		schoolUser.UserId = user_id
+	} else {
+		var SignUpParam user.SignUpParam
+		SignUpParam.Nickname = schoolUser.TeacherName
+		SignUpParam.Passport = schoolUser.Phone
+		SignUpParam.Password = "111111"
+		SignUpParam.Password2 = "111111"
+		result, err := user.SignUp(&SignUpParam)
+		if err != nil {
+			return false, err
+		}
+		schoolUser.UserId = result.(*model.User).Id
+	}
+
 	var schoolUserModel model.SchoolUser
 	re = schoolUserModel.CreateTeacher(schoolUser)
 
 	return
+}
+
+// 检查账号是否存在
+func CheckTeacher(campus_id uint, phone string) bool {
+	var user model.SchoolUser
+	teacher := user.GetTeacherInfoByPhone(campus_id, phone)
+	if teacher.Id != 0 {
+		return true
+	}
+	return false
 }

@@ -6,7 +6,8 @@ type TeacherRequest struct {
 	SchoolId    uint   `v:"required#学校不能为空"`
 	CampusId    uint   `v:"required#校区不能为空"`
 	Sex         string `v:"required|length:1,1#请选择性别|性别非法"`
-	Phone       string `v:"required|length:11,11#联系电话不能为孔|联系电话格式错误"`
+	Phone       string `v:"required|length:11,11#联系电话不能为空|联系电话格式错误"`
+	Identity    string `v:"required#身份类型错误"`
 	Address     string
 	Birthday    string
 	EntryAt     string

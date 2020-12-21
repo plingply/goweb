@@ -9,7 +9,8 @@ type SchoolUser struct {
 	TeacherName string `gorm:"teacher_name;size:10" json:"teacher_name"`
 	Sex         string `gorm:"sex;size:1" json:"sex"`
 	Phone       string `gorm:"phone;size:11" json:"phone"`
-	Address     string `gorm:"address;szie:50" json:"address"`
+	Address     string `gorm:"address;size:50" json:"address"`
+	Identity    string `gorm:"identity;size:10" json:"identity"` // school, campus
 	Birthday    string `gorm:"birthday;size:20" json:"birthday"`
 	EntryAt     string `gorm:"entry_at;size:20" json:"entry_at"`
 	Model
@@ -38,4 +39,11 @@ func (c *SchoolUser) CreateTeacher(schoolUser *SchoolUser) bool {
 	db := GetDB()
 	db.Create(&schoolUser)
 	return true
+}
+
+func (c *SchoolUser) GetTeacherInfoByPhone(campus_id uint, phone string) *SchoolUser {
+	var user SchoolUser
+	db := GetDB()
+	db.Where("phone = ?", phone).Where("campus_id = ?", campus_id).First(&user)
+	return &user
 }
