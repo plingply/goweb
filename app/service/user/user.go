@@ -3,13 +3,14 @@ package user
 import (
 	"errors"
 	"fmt"
-	jwtgo "github.com/dgrijalva/jwt-go"
-	"github.com/gogf/gf/net/ghttp"
-	"github.com/gogf/gf/util/gconv"
 	"goframe-web/app/model"
 	"goframe-web/library/jwt"
 	"goframe-web/library/md5x"
 	"time"
+
+	jwtgo "github.com/dgrijalva/jwt-go"
+	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/util/gconv"
 )
 
 const (
@@ -123,7 +124,7 @@ func Login(passport string, password string) (token string, err error) {
 }
 
 // 退出
-func Signout(userid uint) error{
+func Signout(userid uint) error {
 	// 更新 token
 	var usertoken model.UserToken
 	_, e := usertoken.Update(userid, "")

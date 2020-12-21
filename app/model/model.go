@@ -2,9 +2,10 @@ package model
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/gogf/gf/frame/g"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 var db *gorm.DB
@@ -45,11 +46,14 @@ func Createtable() {
 	GetDB().AutoMigrate(
 		&User{},
 		&UserToken{},
+		&School{},
+		&Campus{},
+		&SchoolUser{},
 	)
 }
 
 type Model struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
-	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
 }
