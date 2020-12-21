@@ -50,3 +50,25 @@ func (u *User) GetUserInfoById(id uint) (*UserRoles, error) {
 	}
 	return nil, errors.New("用户不存在")
 }
+
+// 检查是否是学校管理员
+func CheckSchoolAdmin(school_id uint, user_id uint) bool {
+	var user SchoolUser
+	db := GetDB()
+	db.Table("school_user").Where("school_id = ?", school_id).Where("user_id = ?", user_id).Where("identity = ?", "school").First(&user)
+	if user.Id == user_id {
+		return true
+	}
+	return false
+}
+
+// 获取所在校区id
+func GetCampusIdList(school_id uint, user_id uint) (campusIdList []uint) {
+	var schoolUsers []*SchoolUser
+	db := GetDB()
+	db.Table("school_user").Where("school_id = ?", school_id).Where("user_id = ?", user_id).Where("identity = ?", "teacher").Find(&schoolUsers)
+	for _, item := range schoolUsers {
+		campusIdList = append(campusIdList, item.CampusId)
+	}
+	return campusIdList
+}

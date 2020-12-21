@@ -52,12 +52,14 @@ func UpdateTeacher(teacher_id uint, data map[string]interface{}) (re bool, msg e
 
 func CreateTeacher(campusId uint, schoolUser *model.SchoolUser) (re bool, msg error) {
 
+	var schoolUserModel model.SchoolUser
+
 	if campusId <= 0 {
 		return false, errors.New("参数错误")
 	}
 
 	// 账号唯一性数据检查
-	if ok := CheckTeacher(campusId, schoolUser.Phone); ok {
+	if ok := schoolUserModel.CheckTeacher(campusId, schoolUser.Phone); ok {
 		return false, errors.New("老师已经存在")
 	}
 
@@ -78,18 +80,7 @@ func CreateTeacher(campusId uint, schoolUser *model.SchoolUser) (re bool, msg er
 		schoolUser.UserId = result.(*model.User).Id
 	}
 
-	var schoolUserModel model.SchoolUser
 	re = schoolUserModel.CreateTeacher(schoolUser)
 
 	return
-}
-
-// 检查账号是否存在
-func CheckTeacher(campus_id uint, phone string) bool {
-	var user model.SchoolUser
-	teacher := user.GetTeacherInfoByPhone(campus_id, phone)
-	if teacher.Id != 0 {
-		return true
-	}
-	return false
 }

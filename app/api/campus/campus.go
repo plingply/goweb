@@ -14,8 +14,9 @@ func GetCampusList(r *ghttp.Request) {
 	page := r.GetQueryUint("page")
 	limit := r.GetQueryUint("limit")
 	schoolId := r.GetQueryUint("school_id")
+	user_id := r.GetCtxVar("user_id").Uint()
 
-	result, total, err := campus.GetCampusList(schoolId, page, limit)
+	result, total, err := campus.GetCampusList(schoolId, user_id, page, limit)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -33,8 +34,9 @@ func GetCampusList(r *ghttp.Request) {
 func GetCampusSimpleList(r *ghttp.Request) {
 
 	schoolId := r.GetQueryUint("school_id")
+	user_id := r.GetCtxVar("user_id").Uint()
 
-	result, err := campus.GetCampusSimpleList(schoolId)
+	result, err := campus.GetCampusSimpleList(schoolId, user_id)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())

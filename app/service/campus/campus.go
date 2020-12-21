@@ -5,7 +5,7 @@ import (
 	"goframe-web/app/model"
 )
 
-func GetCampusList(schoolId uint, page uint, Limit uint) (result interface{}, total int, err error) {
+func GetCampusList(schoolId, user_id uint, page uint, Limit uint) (result interface{}, total int, err error) {
 	if schoolId == 0 {
 		return nil, 0, errors.New("学校id不能为空")
 	}
@@ -16,17 +16,17 @@ func GetCampusList(schoolId uint, page uint, Limit uint) (result interface{}, to
 		return nil, 0, errors.New("参数错误")
 	}
 	var campus *model.Campus
-	result, total = campus.GetCampusList(schoolId, page, Limit)
+	result, total = campus.GetCampusList(schoolId, user_id, page, Limit)
 
 	return result, total, nil
 }
 
-func GetCampusSimpleList(schoolId uint) (result interface{}, err error) {
+func GetCampusSimpleList(schoolId, user_id uint) (result interface{}, err error) {
 	if schoolId == 0 {
 		return nil, errors.New("学校id不能为空")
 	}
 	var campus *model.Campus
-	result, err = campus.GetCampusSimpleList(schoolId)
+	result, err = campus.GetCampusSimpleList(schoolId, user_id)
 	return
 }
 

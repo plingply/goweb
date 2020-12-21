@@ -47,3 +47,13 @@ func (c *SchoolUser) GetTeacherInfoByPhone(campus_id uint, phone string) *School
 	db.Where("phone = ?", phone).Where("campus_id = ?", campus_id).First(&user)
 	return &user
 }
+
+// 检查老师账号是否存在
+func (c *SchoolUser) CheckTeacher(campus_id uint, phone string) bool {
+	var user SchoolUser
+	teacher := user.GetTeacherInfoByPhone(campus_id, phone)
+	if teacher.Id != 0 {
+		return true
+	}
+	return false
+}
