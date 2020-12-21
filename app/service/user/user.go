@@ -103,11 +103,7 @@ func Login(passport string, password string) (token string, err error) {
 
 	var claims jwt.CustomClaims
 	claims.Username = userInfo.Passport
-<<<<<<< HEAD
-	claims.UserId = userInfo.Id
-=======
 	claims.Userid = userInfo.Id
->>>>>>> 06510335388d719b9056f8e305ef45d0dd6ff4f3
 	claims.StandardClaims = jwtgo.StandardClaims{
 		NotBefore: int64(time.Now().Unix() - 1000),        // 签名生效时间
 		ExpiresAt: int64(time.Now().Unix() + 3600*24*365), // 过期时间 一小时
