@@ -2,7 +2,7 @@ package router
 
 import (
 	"goframe-web/app/api/campus"
-	"goframe-web/app/api/hello"
+	"goframe-web/app/api/class"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/user"
 	"goframe-web/app/middleware"
@@ -18,10 +18,6 @@ func init() {
 	s.Use(middleware.CORS)
 	// 某些浏览器直接请求favicon.ico文件，特别是产生404时
 	s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
-
-	s.Group("/", func(group *ghttp.RouterGroup) {
-		group.ALL("/", hello.Hello)
-	})
 
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.POST("/login", user.Login)
@@ -41,5 +37,11 @@ func init() {
 		group.GET("/teacher/list", school_user.GetTeacherList)
 		group.POST("/teacher/update", school_user.UpdateTeacher)
 		group.POST("/teacher/create", school_user.CreateTeacher)
+
+		group.GET("/class/list", class.GetClassList)
+		group.GET("/class/simple/list", class.GetClassSimpleList)
+		group.POST("/class/update", class.UpdateClass)
+		group.POST("/class/create", class.CreateClass)
+
 	})
 }

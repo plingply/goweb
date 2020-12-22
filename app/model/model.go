@@ -49,6 +49,7 @@ func Createtable() {
 		&School{},
 		&Campus{},
 		&SchoolUser{},
+		&Classs{},
 	)
 }
 

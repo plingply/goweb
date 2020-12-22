@@ -3,6 +3,7 @@ package campus
 import (
 	"errors"
 	"goframe-web/app/model"
+	"unicode/utf8"
 )
 
 func GetCampusList(schoolId, user_id uint, page uint, Limit uint) (result interface{}, total int, err error) {
@@ -36,23 +37,23 @@ func UpdateCampus(campusId uint, data map[string]interface{}) (re bool, msg erro
 		return false, errors.New("参数错误")
 	}
 
-	if len(data["campus_name"].(string)) > 20 {
+	if utf8.RuneCountInString(data["campus_name"].(string)) > 20 {
 		return false, errors.New("参数错误 campus_name")
 	}
 
-	if len(data["address"].(string)) > 50 {
+	if utf8.RuneCountInString(data["address"].(string)) > 50 {
 		return false, errors.New("参数错误 address")
 	}
 
-	if len(data["province"].(string)) > 7 {
+	if utf8.RuneCountInString(data["province"].(string)) > 7 {
 		return false, errors.New("参数错误 province")
 	}
 
-	if len(data["city"].(string)) > 7 {
+	if utf8.RuneCountInString(data["city"].(string)) > 7 {
 		return false, errors.New("参数错误 city")
 	}
 
-	if len(data["area"].(string)) > 7 {
+	if utf8.RuneCountInString(data["area"].(string)) > 7 {
 		return false, errors.New("参数错误 area")
 	}
 
