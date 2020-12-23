@@ -31,3 +31,12 @@
         Path   = "/tmp/log/gf-app/sql"
         Level  = "all"
         Stdout = true
+
+
+#OSS
+[OSS]
+    endpoint = "https://oss-cn-beijing.aliyuncs.com"
+    fileEndpoint = "https://xinxin950618.oss-cn-beijing.aliyuncs.com"
+    accessKeyId = "LTAITTDGsu8PM4kG"
+    accessKeySecret = "Yo7ZGScBuHv5Gib3rVUF1SRXRuXAh4"
+    bucketName = "xinxin950618"

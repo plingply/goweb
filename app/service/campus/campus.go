@@ -37,23 +37,23 @@ func UpdateCampus(campusId uint, data map[string]interface{}) (re bool, msg erro
 		return false, errors.New("参数错误")
 	}
 
-	if utf8.RuneCountInString(data["campus_name"].(string)) > 20 {
+	if data["campus_name"] != nil && utf8.RuneCountInString(data["campus_name"].(string)) > 20 {
 		return false, errors.New("参数错误 campus_name")
 	}
 
-	if utf8.RuneCountInString(data["address"].(string)) > 50 {
+	if data["address"] != nil && utf8.RuneCountInString(data["address"].(string)) > 50 {
 		return false, errors.New("参数错误 address")
 	}
 
-	if utf8.RuneCountInString(data["province"].(string)) > 7 {
+	if data["province"] != nil && utf8.RuneCountInString(data["province"].(string)) > 7 {
 		return false, errors.New("参数错误 province")
 	}
 
-	if utf8.RuneCountInString(data["city"].(string)) > 7 {
+	if data["city"] != nil && utf8.RuneCountInString(data["city"].(string)) > 7 {
 		return false, errors.New("参数错误 city")
 	}
 
-	if utf8.RuneCountInString(data["area"].(string)) > 7 {
+	if data["area"] != nil && utf8.RuneCountInString(data["area"].(string)) > 7 {
 		return false, errors.New("参数错误 area")
 	}
 

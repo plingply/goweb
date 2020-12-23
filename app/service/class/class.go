@@ -39,7 +39,7 @@ func UpdateClass(class_id uint, data map[string]interface{}) (re bool, msg error
 		return false, errors.New("参数错误")
 	}
 
-	if utf8.RuneCountInString(data["class_name"].(string)) > 20 {
+	if data["class_name"] != nil && utf8.RuneCountInString(data["class_name"].(string)) > 20 {
 		return false, errors.New("参数错误 Class_name")
 	}
 

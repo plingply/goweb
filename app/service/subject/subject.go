@@ -35,11 +35,11 @@ func UpdateSubject(subject_id uint, data map[string]interface{}) (re bool, msg e
 		return false, errors.New("参数错误")
 	}
 
-	if utf8.RuneCountInString(data["subject_name"].(string)) > 20 {
+	if data["subject_name"] != nil && utf8.RuneCountInString(data["subject_name"].(string)) > 20 {
 		return false, errors.New("参数错误 subject_name")
 	}
 
-	if utf8.RuneCountInString(data["remark"].(string)) > 100 {
+	if data["remark"] != nil && utf8.RuneCountInString(data["remark"].(string)) > 100 {
 		return false, errors.New("参数错误 remark")
 	}
 

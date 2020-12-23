@@ -6,6 +6,7 @@ import (
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
 	"goframe-web/app/api/subject"
+	"goframe-web/app/api/upload_file"
 	"goframe-web/app/api/user"
 	"goframe-web/app/middleware"
 
@@ -53,5 +54,6 @@ func init() {
 		group.POST("/subject/update", subject.UpdateSubject)
 		group.POST("/subject/create", subject.CreateSubject)
 
+		group.POST("/upload/file", upload_file.UploadFile)
 	})
 }

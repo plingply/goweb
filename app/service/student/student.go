@@ -35,27 +35,27 @@ func UpdateStudent(student_id uint, data map[string]interface{}) (re bool, msg e
 		return false, errors.New("参数错误")
 	}
 
-	if utf8.RuneCountInString(data["student_name"].(string)) > 20 {
+	if data["student_name"] != nil && utf8.RuneCountInString(data["student_name"].(string)) > 20 {
 		return false, errors.New("参数错误 student_name")
 	}
 
-	if utf8.RuneCountInString(data["avatar"].(string)) > 100 {
+	if data["avatar"] != nil && utf8.RuneCountInString(data["avatar"].(string)) > 200 {
 		return false, errors.New("参数错误 avatar")
 	}
 
-	if utf8.RuneCountInString(data["address"].(string)) > 50 {
+	if data["address"] != nil && utf8.RuneCountInString(data["address"].(string)) > 50 {
 		return false, errors.New("参数错误 address")
 	}
 
-	if utf8.RuneCountInString(data["school_name"].(string)) > 50 {
+	if data["school_name"] != nil && utf8.RuneCountInString(data["school_name"].(string)) > 50 {
 		return false, errors.New("参数错误 school_name")
 	}
 
-	if utf8.RuneCountInString(data["birthday"].(string)) > 20 {
+	if data["birthday"] != nil && utf8.RuneCountInString(data["birthday"].(string)) > 20 {
 		return false, errors.New("参数错误 birthday")
 	}
 
-	if utf8.RuneCountInString(data["remark"].(string)) > 100 {
+	if data["remark"] != nil && utf8.RuneCountInString(data["remark"].(string)) > 100 {
 		return false, errors.New("参数错误 remark")
 	}
 

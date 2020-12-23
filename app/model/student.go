@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-23 14:13:01
- * @LastEditTime: 2020-12-23 17:02:33
+ * @LastEditTime: 2020-12-23 19:32:12
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/student.go
@@ -14,7 +14,7 @@ type Student struct {
 	CampusId    uint   `gorm:"campus_id" json:"campus_id"`                 // 学校ID
 	StudentName string `gorm:"student_name;size:20"   json:"student_name"` // 学校名称
 	Sex         string `gorm:"sex;size:1"   json:"sex"`
-	Avatar      string `gorm:"avatar;size:100"   json:"avatar"`
+	Avatar      string `gorm:"avatar;size:200"   json:"avatar"`
 	Address     string `gorm:"address;size:50"   json:"address"`
 	SchoolName  string `gorm:"school_name;size:50"   json:"school_name"`
 	Birthday    string `gorm:"birthday;size:20" json:"birthday"`
