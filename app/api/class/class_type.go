@@ -5,5 +5,7 @@ type ClassRequest struct {
 	SchoolId  uint   `v:"required#学校不能为空"`
 	CampusId  uint   `v:"required#校区不能为空"`
 	ClassType string `v:"required#班级类型不能为空"`
-	Status    string `v:"required#班级状态不能为空"`
+	Capacity  uint
+	Remark    string `v:"length:0,100#备注长度应当在:min到:max之间"`
+	Status    string
 }

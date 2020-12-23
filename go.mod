@@ -2,6 +2,7 @@ module goframe-web
 
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.5+incompatible
+	github.com/casbin/casbin v1.9.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gogf/gf v1.14.5
 	github.com/gorilla/websocket v1.4.2 // indirect

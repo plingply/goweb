@@ -1,23 +1,22 @@
-package class
+package card
 
 import (
 	"goframe-web/app/model"
-	"goframe-web/app/service/class"
+	"goframe-web/app/service/card"
 	"goframe-web/library/response"
 
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 )
 
-func GetClassList(r *ghttp.Request) {
+func GetCardList(r *ghttp.Request) {
 
 	page := r.GetQueryUint("page")
 	limit := r.GetQueryUint("limit")
 	school_id := r.GetQueryUint("school_id")
 	campus_id := r.GetQueryUint("campus_id")
-	user_id := r.GetCtxVar("user_id").Uint()
 
-	result, total, err := class.GetClassList(school_id, campus_id, user_id, page, limit)
+	result, total, err := card.GetCardList(school_id, campus_id, page, limit)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -32,13 +31,12 @@ func GetClassList(r *ghttp.Request) {
 	response.JsonExit(r, 0, "ok", resp)
 }
 
-func GetClassSimpleList(r *ghttp.Request) {
+func GetCardSimpleList(r *ghttp.Request) {
 
 	school_id := r.GetQueryUint("school_id")
 	campus_id := r.GetQueryUint("school_id")
-	user_id := r.GetCtxVar("user_id").Uint()
 
-	result, err := class.GetClassSimpleList(school_id, campus_id, user_id)
+	result, err := card.GetCardSimpleList(school_id, campus_id)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -47,22 +45,14 @@ func GetClassSimpleList(r *ghttp.Request) {
 	response.JsonExit(r, 0, "ok", result)
 }
 
-func UpdateClass(r *ghttp.Request) {
+func UpdateCard(r *ghttp.Request) {
 
-	class_id := r.GetQueryUint("class_id")
+	card_id := r.GetQueryUint("card_id")
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("class_name") {
-		data["class_name"] = r.GetFormString("class_name")
-	}
-
-	if r.GetFormBool("class_type") {
-		data["class_type"] = r.GetFormString("class_type")
-	}
-
-	if r.GetFormBool("capacity") {
-		data["capacity"] = r.GetFormUint("capacity")
+	if r.GetFormBool("card_name") {
+		data["card_name"] = r.GetFormString("card_name")
 	}
 
 	if r.GetFormBool("remark") {
@@ -73,7 +63,7 @@ func UpdateClass(r *ghttp.Request) {
 		data["status"] = r.GetFormString("status")
 	}
 
-	result, err := class.UpdateClass(class_id, data)
+	result, err := card.UpdateCard(card_id, data)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -82,25 +72,25 @@ func UpdateClass(r *ghttp.Request) {
 	response.JsonExit(r, 0, "ok", result)
 }
 
-func CreateClass(r *ghttp.Request) {
+func CreateCard(r *ghttp.Request) {
 
 	school_id := r.GetQueryUint("school_id")
 	campus_id := r.GetQueryUint("campus_id")
 
 	var (
-		data       *ClassRequest
-		classParam *model.Classs
+		data      *CardRequest
+		cardParam *model.Card
 	)
 
 	if err := r.Parse(&data); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
 
-	if err := gconv.Struct(data, &classParam); err != nil {
+	if err := gconv.Struct(data, &cardParam); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
 
-	result, err := class.CreateClass(school_id, campus_id, classParam)
+	result, err := card.CreateCard(school_id, campus_id, cardParam)
 
 	if err != nil {
 		response.JsonExit(r, 0, err.Error())

@@ -2,7 +2,9 @@ package router
 
 import (
 	"goframe-web/app/api/campus"
+	"goframe-web/app/api/card"
 	"goframe-web/app/api/class"
+	"goframe-web/app/api/class_member"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
 	"goframe-web/app/api/subject"
@@ -45,6 +47,7 @@ func init() {
 		group.GET("/class/simple/list", class.GetClassSimpleList)
 		group.POST("/class/update", class.UpdateClass)
 		group.POST("/class/create", class.CreateClass)
+		group.GET("/class/member/list", class_member.GetClassMemeberList)
 
 		group.GET("/student/list", student.GetStudentList)
 		group.POST("/student/update", student.UpdateStudent)
@@ -53,6 +56,11 @@ func init() {
 		group.GET("/subject/list", subject.GetSubjectList)
 		group.POST("/subject/update", subject.UpdateSubject)
 		group.POST("/subject/create", subject.CreateSubject)
+
+		group.GET("/card/list", card.GetCardList)
+		group.GET("/card/simple/list", card.GetCardSimpleList)
+		group.POST("/card/update", card.UpdateCard)
+		group.POST("/card/create", card.CreateCard)
 
 		group.POST("/upload/file", upload_file.UploadFile)
 	})

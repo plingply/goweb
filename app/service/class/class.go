@@ -43,6 +43,14 @@ func UpdateClass(class_id uint, data map[string]interface{}) (re bool, msg error
 		return false, errors.New("参数错误 Class_name")
 	}
 
+	if data["capacity"] != nil && data["capacity"].(uint) > 99 {
+		return false, errors.New("参数错误 capacity")
+	}
+
+	if data["remark"] != nil && utf8.RuneCountInString(data["remark"].(string)) > 100 {
+		return false, errors.New("参数错误 remark")
+	}
+
 	var class *model.Classs
 	re = class.UpdateClass(class_id, data)
 
