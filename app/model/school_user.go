@@ -16,7 +16,7 @@ type SchoolUser struct {
 	Model
 }
 
-func (c *SchoolUser) GetTeacherList(schoolId, campusId, page, Limit uint) ([]*SchoolUser, int) {
+func (c *SchoolUser) GetTeacherList(schoolId, campusId, page, limit uint) ([]*SchoolUser, int) {
 	var schoolUser []*SchoolUser
 	var total int
 	db := GetDB()
@@ -24,7 +24,7 @@ func (c *SchoolUser) GetTeacherList(schoolId, campusId, page, Limit uint) ([]*Sc
 	if campusId != 0 {
 		db = db.Where("campus_id = ?", campusId)
 	}
-	db.Offset((page - 1) * Limit).Limit(Limit).Find(&schoolUser)
+	db.Offset((page - 1) * limit).Limit(limit).Find(&schoolUser)
 	db.Table("school_user").Where("campus_id = ?", campusId).Count(&total)
 
 	return schoolUser, total

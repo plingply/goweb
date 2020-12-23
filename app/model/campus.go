@@ -12,7 +12,7 @@ type Campus struct {
 	Model
 }
 
-func (c *Campus) GetCampusList(schoolId, user_id uint, page uint, Limit uint) ([]*Campus, int) {
+func (c *Campus) GetCampusList(schoolId, user_id uint, page uint, limit uint) ([]*Campus, int) {
 	var Campus []*Campus
 	var total int
 	db := GetDB()
@@ -20,11 +20,11 @@ func (c *Campus) GetCampusList(schoolId, user_id uint, page uint, Limit uint) ([
 	isAdmin := CheckSchoolAdmin(schoolId, user_id)
 
 	if isAdmin {
-		db.Where("school_id = ?", schoolId).Offset((page - 1) * Limit).Limit(Limit).Find(&Campus)
+		db.Where("school_id = ?", schoolId).Offset((page - 1) * limit).Limit(limit).Find(&Campus)
 		db.Table("campus").Where("school_id = ?", schoolId).Count(&total)
 	} else {
 		campusList := GetCampusIdList(schoolId, user_id)
-		db.Where("school_id = ?", schoolId).Where("id in (?)", campusList).Offset((page - 1) * Limit).Limit(Limit).Find(&Campus)
+		db.Where("school_id = ?", schoolId).Where("id in (?)", campusList).Offset((page - 1) * limit).Limit(limit).Find(&Campus)
 		db.Table("campus").Where("school_id = ?", schoolId).Where("id in (?)", campusList).Count(&total)
 	}
 

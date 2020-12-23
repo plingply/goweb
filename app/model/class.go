@@ -10,13 +10,13 @@ type Classs struct {
 	Model
 }
 
-func (c *Classs) GetClassList(school_id, campus_id, user_id uint, page uint, Limit uint) ([]*Classs, int) {
+func (c *Classs) GetClassList(school_id, campus_id, user_id uint, page uint, limit uint) ([]*Classs, int) {
 	var class []*Classs
 	var total int
 	db := GetDB()
 
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * Limit).Limit(Limit).Find(&class)
+	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * limit).Limit(limit).Find(&class)
 	db.Table("classs").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total)
 
 	return class, total

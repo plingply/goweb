@@ -1,23 +1,22 @@
-package class
+package subject
 
 import (
 	"goframe-web/app/model"
-	"goframe-web/app/service/class"
+	"goframe-web/app/service/subject"
 	"goframe-web/library/response"
 
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 )
 
-func GetClassList(r *ghttp.Request) {
+func GetSubjectList(r *ghttp.Request) {
 
 	page := r.GetQueryUint("page")
 	limit := r.GetQueryUint("limit")
 	school_id := r.GetQueryUint("school_id")
 	campus_id := r.GetQueryUint("campus_id")
-	user_id := r.GetCtxVar("user_id").Uint()
 
-	result, total, err := class.GetClassList(school_id, campus_id, user_id, page, limit)
+	result, total, err := subject.GetSubjectList(school_id, campus_id, page, limit)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -32,40 +31,25 @@ func GetClassList(r *ghttp.Request) {
 	response.JsonExit(r, 0, "ok", resp)
 }
 
-func GetClassSimpleList(r *ghttp.Request) {
+func UpdateSubject(r *ghttp.Request) {
 
-	school_id := r.GetQueryUint("school_id")
-	campus_id := r.GetQueryUint("school_id")
-	user_id := r.GetCtxVar("user_id").Uint()
-
-	result, err := class.GetClassSimpleList(school_id, campus_id, user_id)
-
-	if err != nil {
-		response.JsonExit(r, 1, err.Error())
-	}
-
-	response.JsonExit(r, 0, "ok", result)
-}
-
-func UpdateClass(r *ghttp.Request) {
-
-	class_id := r.GetQueryUint("class_id")
+	subject_id := r.GetQueryUint("subject_id")
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("class_name") {
-		data["class_name"] = r.GetFormString("class_name")
+	if r.GetFormBool("subject_name") {
+		data["subject_name"] = r.GetFormString("subject_name")
 	}
 
-	if r.GetFormBool("class_type") {
-		data["class_type"] = r.GetFormString("class_type")
+	if r.GetFormBool("remark") {
+		data["remark"] = r.GetFormString("remark")
 	}
 
 	if r.GetFormBool("status") {
 		data["status"] = r.GetFormString("status")
 	}
 
-	result, err := class.UpdateClass(class_id, data)
+	result, err := subject.UpdateSubject(subject_id, data)
 
 	if err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -74,25 +58,25 @@ func UpdateClass(r *ghttp.Request) {
 	response.JsonExit(r, 0, "ok", result)
 }
 
-func CreateClass(r *ghttp.Request) {
+func CreateSubject(r *ghttp.Request) {
 
 	school_id := r.GetQueryUint("school_id")
 	campus_id := r.GetQueryUint("campus_id")
 
 	var (
-		data       *ClassRequest
-		classParam *model.Classs
+		data         *SubjectRequest
+		subjectParam *model.Subject
 	)
 
 	if err := r.Parse(&data); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
 
-	if err := gconv.Struct(data, &classParam); err != nil {
+	if err := gconv.Struct(data, &subjectParam); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
 
-	result, err := class.CreateClass(school_id, campus_id, classParam)
+	result, err := subject.CreateSubject(school_id, campus_id, subjectParam)
 
 	if err != nil {
 		response.JsonExit(r, 0, err.Error())

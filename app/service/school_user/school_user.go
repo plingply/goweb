@@ -18,7 +18,7 @@ func GetSchoolList(user_id uint) []*SchoolListByUser {
 	return schoolList
 }
 
-func GetTeacherList(schoolId, campusId, page, Limit uint) (result interface{}, total int, err error) {
+func GetTeacherList(schoolId, campusId, page, limit uint) (result interface{}, total int, err error) {
 
 	if schoolId == 0 {
 		return nil, 0, errors.New("学校id不能为空")
@@ -29,11 +29,11 @@ func GetTeacherList(schoolId, campusId, page, Limit uint) (result interface{}, t
 	if page <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
-	if Limit <= 0 {
+	if limit <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
 	var schoolUser *model.SchoolUser
-	result, total = schoolUser.GetTeacherList(schoolId, campusId, page, Limit)
+	result, total = schoolUser.GetTeacherList(schoolId, campusId, page, limit)
 
 	return result, total, nil
 }

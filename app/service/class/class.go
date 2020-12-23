@@ -6,7 +6,7 @@ import (
 	"unicode/utf8"
 )
 
-func GetClassList(school_id, campus_id, user_id uint, page uint, Limit uint) (result interface{}, total int, err error) {
+func GetClassList(school_id, campus_id, user_id, page, limit uint) (result interface{}, total int, err error) {
 
 	if school_id == 0 {
 		return nil, 0, errors.New("学校id不能为空")
@@ -14,12 +14,12 @@ func GetClassList(school_id, campus_id, user_id uint, page uint, Limit uint) (re
 	if page <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
-	if Limit <= 0 {
+	if limit <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
 
 	var class *model.Classs
-	result, total = class.GetClassList(school_id, campus_id, user_id, page, Limit)
+	result, total = class.GetClassList(school_id, campus_id, user_id, page, limit)
 
 	return result, total, nil
 }

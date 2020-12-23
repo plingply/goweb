@@ -6,18 +6,18 @@ import (
 	"unicode/utf8"
 )
 
-func GetCampusList(schoolId, user_id uint, page uint, Limit uint) (result interface{}, total int, err error) {
+func GetCampusList(schoolId, user_id, page, limit uint) (result interface{}, total int, err error) {
 	if schoolId == 0 {
 		return nil, 0, errors.New("学校id不能为空")
 	}
 	if page <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
-	if Limit <= 0 {
+	if limit <= 0 {
 		return nil, 0, errors.New("参数错误")
 	}
 	var campus *model.Campus
-	result, total = campus.GetCampusList(schoolId, user_id, page, Limit)
+	result, total = campus.GetCampusList(schoolId, user_id, page, limit)
 
 	return result, total, nil
 }

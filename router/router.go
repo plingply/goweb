@@ -4,6 +4,8 @@ import (
 	"goframe-web/app/api/campus"
 	"goframe-web/app/api/class"
 	"goframe-web/app/api/school_user"
+	"goframe-web/app/api/student"
+	"goframe-web/app/api/subject"
 	"goframe-web/app/api/user"
 	"goframe-web/app/middleware"
 
@@ -42,6 +44,14 @@ func init() {
 		group.GET("/class/simple/list", class.GetClassSimpleList)
 		group.POST("/class/update", class.UpdateClass)
 		group.POST("/class/create", class.CreateClass)
+
+		group.GET("/student/list", student.GetStudentList)
+		group.POST("/student/update", student.UpdateStudent)
+		group.POST("/student/create", student.CreateStudent)
+
+		group.GET("/subject/list", subject.GetSubjectList)
+		group.POST("/subject/update", subject.UpdateSubject)
+		group.POST("/subject/create", subject.CreateSubject)
 
 	})
 }
