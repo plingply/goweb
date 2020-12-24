@@ -26,8 +26,11 @@ func init() {
 	s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 
 	s.Group("/api", func(group *ghttp.RouterGroup) {
+
 		group.POST("/login", user.Login)
 		group.POST("/signup", user.SignUp)
+		group.POST("/zuowen/info", zuowen.GetInfo)
+
 		group.Middleware(middleware.JWTAuth)
 		group.GET("/user/info", user.Info)
 		group.POST("/signout", user.Signout)
@@ -66,5 +69,7 @@ func init() {
 		group.POST("/upload/file", upload_file.UploadFile)
 
 		group.POST("/zuowen/sync", zuowen.SaveZuowen)
+		group.GET("/zuowen/list", zuowen.GetZuowenList)
+		group.GET("/zuowen/lastid", zuowen.GetZuowenLastId)
 	})
 }

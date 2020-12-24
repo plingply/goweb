@@ -22,3 +22,14 @@ type Zuowen struct {
 	ZwContent  string `gorm:"zw_content;type:text(60000)"   json:"zw_content"`
 	Model
 }
+
+func (z *Zuowen) GetZuowenList(page, limit uint) ([]*Zuowen, int) {
+	var zuowen []*Zuowen
+	var total int
+	db := GetDB()
+
+	db.Order("zuowen_id desc").Offset((page - 1) * limit).Limit(limit).Find(&zuowen)
+	db.Table("zuowen").Count(&total)
+
+	return zuowen, total
+}

@@ -30,3 +30,40 @@ func SaveZuowen(r *ghttp.Request) {
 		response.JsonExit(r, 0, "同步成功", id)
 	}
 }
+
+func GetZuowenList(r *ghttp.Request) {
+
+	page := r.GetQueryUint("page")
+	limit := r.GetQueryUint("limit")
+
+	if result, total, err := zuowen.GetZuowenList(page, limit); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+
+		var resp = make(map[string]interface{})
+		resp["item"] = result
+		resp["total"] = total
+		resp["page"] = page
+		resp["limit"] = limit
+
+		response.JsonExit(r, 0, "作文列表", resp)
+	}
+}
+
+func GetZuowenLastId(r *ghttp.Request) {
+
+	if id, err := zuowen.GetZuowenLastId(); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "文章id", id)
+	}
+}
+
+func GetInfo(r *ghttp.Request) {
+	zuowen_id := r.GetFormUint("zuowen_id")
+	if data, err := zuowen.GetInfo(zuowen_id); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "作文详情", data)
+	}
+}
