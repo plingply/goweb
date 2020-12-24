@@ -10,6 +10,7 @@ import (
 	"goframe-web/app/api/subject"
 	"goframe-web/app/api/upload_file"
 	"goframe-web/app/api/user"
+	"goframe-web/app/api/zuowen"
 	"goframe-web/app/middleware"
 
 	"github.com/gogf/gf/frame/g"
@@ -26,7 +27,6 @@ func init() {
 
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.POST("/login", user.Login)
-		group.GET("/art", user.GetArt)
 		group.POST("/signup", user.SignUp)
 		group.Middleware(middleware.JWTAuth)
 		group.GET("/user/info", user.Info)
@@ -64,5 +64,7 @@ func init() {
 		group.POST("/card/create", card.CreateCard)
 
 		group.POST("/upload/file", upload_file.UploadFile)
+
+		group.POST("/zuowen/sync", zuowen.SaveZuowen)
 	})
 }
