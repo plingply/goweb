@@ -26,6 +26,7 @@ func init() {
 
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.POST("/login", user.Login)
+		group.GET("/art", user.GetArt)
 		group.POST("/signup", user.SignUp)
 		group.Middleware(middleware.JWTAuth)
 		group.GET("/user/info", user.Info)
