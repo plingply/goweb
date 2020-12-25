@@ -6,6 +6,7 @@ import (
 	"goframe-web/app/api/class"
 	"goframe-web/app/api/class_member"
 	"goframe-web/app/api/course"
+	"goframe-web/app/api/peotry"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
 	"goframe-web/app/api/subject"
@@ -75,6 +76,9 @@ func init() {
 		group.POST("/zuowen/sync", zuowen.SaveZuowen)
 		group.GET("/zuowen/list", zuowen.GetZuowenList)
 		group.GET("/zuowen/lastid", zuowen.GetZuowenLastId)
+
+		group.POST("/peotry/sync", peotry.CreatePeotry)
+		group.GET("/peotry/lastid", peotry.GetPeotryLastId)
 
 		group.GET("/course/list", course.GetCourseList)
 	})
