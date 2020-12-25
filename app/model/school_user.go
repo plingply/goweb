@@ -20,12 +20,11 @@ func (c *SchoolUser) GetTeacherList(schoolId, campusId, page, limit uint) ([]*Sc
 	var schoolUser []*SchoolUser
 	var total int
 	db := GetDB()
-	db = db.Where("school_id = ?", schoolId)
+	db = db.Table("school_user").Where("school_id = ?", schoolId).Count(&total)
 	if campusId != 0 {
 		db = db.Where("campus_id = ?", campusId)
 	}
 	db.Offset((page - 1) * limit).Limit(limit).Find(&schoolUser)
-	db.Table("school_user").Where("campus_id = ?", campusId).Count(&total)
 
 	return schoolUser, total
 }

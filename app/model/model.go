@@ -55,6 +55,7 @@ func Createtable() {
 		&Card{},
 		&ClassMember{},
 		&Zuowen{},
+		&Course{},
 	)
 }
 

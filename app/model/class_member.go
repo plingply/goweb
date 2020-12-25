@@ -30,12 +30,13 @@ type ClassMemberList struct {
 func (c *ClassMember) GetClassMemberList(school_id, campus_id, class_id, page, limit uint) (classMemberList []*ClassMemberList, total uint) {
 	db := GetDB()
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Table("class_member").Select("class_member.*, student.student_name").Where("class_member.school_id = ?", school_id).
-		Where("class_member.campus_id = ?", campus_id).Where("class_member.class_id = ?", class_id).
+	db.Table("class_member").
+		Select("class_member.*, student.student_name").
+		Where("class_member.school_id = ?", school_id).
+		Where("class_member.campus_id = ?", campus_id).
+		Where("class_member.class_id = ?", class_id).
 		Joins("left join student on class_member.student_id = student.id").
+		Count(&total).
 		Offset((page - 1) * limit).Limit(limit).Scan(&classMemberList)
-	db.Table("class_member").Select("class_member.*, student.student_name").Where("class_member.school_id = ?", school_id).
-		Where("class_member.campus_id = ?", campus_id).Where("class_member.class_id = ?", class_id).
-		Joins("left join student on class_member.student_id = student.id").Count(&total)
 	return classMemberList, total
 }

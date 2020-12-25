@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-24 15:03:31
- * @LastEditTime: 2020-12-24 16:07:22
+ * @LastEditTime: 2020-12-25 13:25:13
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/zuowen.go
@@ -23,13 +23,11 @@ type Zuowen struct {
 	Model
 }
 
+// gener string, grade string,
 func (z *Zuowen) GetZuowenList(page, limit uint) ([]*Zuowen, int) {
 	var zuowen []*Zuowen
 	var total int
 	db := GetDB()
-
-	db.Order("zuowen_id desc").Offset((page - 1) * limit).Limit(limit).Find(&zuowen)
-	db.Table("zuowen").Count(&total)
-
+	db.Table("zuowen").Order("zuowen_id desc").Count(&total).Offset((page - 1) * limit).Limit(limit).Find(&zuowen)
 	return zuowen, total
 }

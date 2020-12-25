@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-23 14:13:01
- * @LastEditTime: 2020-12-23 19:32:12
+ * @LastEditTime: 2020-12-25 13:34:56
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/student.go
@@ -29,9 +29,11 @@ func (c *Student) GetStudentList(school_id, campus_id, page uint, limit uint) ([
 	db := GetDB()
 
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * limit).Limit(limit).Find(&student)
-	db.Table("student").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total)
-
+	db.Table("student").
+		Where("school_id = ?", school_id).
+		Where("campus_id = ?", campus_id).
+		Count(&total).
+		Offset((page - 1) * limit).Limit(limit).Find(&student)
 	return student, total
 }
 

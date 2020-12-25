@@ -2,7 +2,6 @@ package model
 
 import (
 	"errors"
-	"fmt"
 )
 
 // Entity is the golang structure for table user.
@@ -43,7 +42,6 @@ func (u *User) GetUserInfoById(id uint) (*UserRoles, error) {
 	var user UserRoles
 	db := GetDB()
 	db.Table("user").Where("id = ?", id).Scan(&user)
-	fmt.Println("user:==>", user)
 	if user.Passport != "" {
 		user.Roles = []string{"admin", "editor"}
 		return &user, nil

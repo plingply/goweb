@@ -16,9 +16,7 @@ func (c *Card) GetCardList(school_id, campus_id, page uint, limit uint) ([]*Card
 	db := GetDB()
 
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * limit).Limit(limit).Find(&card)
-	db.Table("card").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total)
-
+	db.Table("card").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total).Offset((page - 1) * limit).Limit(limit).Find(&card)
 	return card, total
 }
 

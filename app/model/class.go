@@ -18,9 +18,11 @@ func (c *Classs) GetClassList(school_id, campus_id, user_id uint, page uint, lim
 	db := GetDB()
 
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * limit).Limit(limit).Find(&class)
-	db.Table("classs").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total)
-
+	db.Table("classs").
+		Where("school_id = ?", school_id).
+		Where("campus_id = ?", campus_id).
+		Count(&total).
+		Offset((page - 1) * limit).Limit(limit).Find(&class)
 	return class, total
 }
 

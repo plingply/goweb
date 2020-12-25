@@ -16,9 +16,11 @@ func (c *Subject) GetSubjectList(school_id, campus_id, page, limit uint) ([]*Sub
 	db := GetDB()
 
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Offset((page - 1) * limit).Limit(limit).Find(&subject)
-	db.Table("subject").Where("school_id = ?", school_id).Where("campus_id = ?", campus_id).Count(&total)
-
+	db.Table("subject").
+		Where("school_id = ?", school_id).
+		Where("campus_id = ?", campus_id).
+		Count(&total).
+		Offset((page - 1) * limit).Limit(limit).Find(&subject)
 	return subject, total
 }
 
