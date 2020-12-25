@@ -72,3 +72,31 @@ func CreateClass(school_id, campus_id uint, class *model.Classs) (re bool, msg e
 
 	return
 }
+
+func GetClassInfo(school_id, campus_id, class_id uint) (*model.Classs, error) {
+
+	if school_id <= 0 {
+		return nil, errors.New("参数错误 school_id")
+	}
+
+	if campus_id <= 0 {
+		return nil, errors.New("参数错误 campus_id")
+	}
+
+	if class_id <= 0 {
+		return nil, errors.New("参数错误 class_id")
+	}
+
+	db := model.GetDB()
+	var class model.Classs
+	class.Id = class_id
+	class.SchoolId = school_id
+	class.CampusId = campus_id
+	db.Find(&class)
+
+	if class.ClassName == "" {
+		return nil, errors.New("班级不存在")
+	}
+
+	return &class, nil
+}

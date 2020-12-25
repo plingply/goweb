@@ -108,3 +108,15 @@ func CreateClass(r *ghttp.Request) {
 
 	response.JsonExit(r, 0, "ok", result)
 }
+
+func GetClassInfo(r *ghttp.Request) {
+	school_id := r.GetQueryUint("school_id")
+	campus_id := r.GetQueryUint("campus_id")
+	class_id := r.GetQueryUint("class_id")
+
+	if result, err := class.GetClassInfo(school_id, campus_id, class_id); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "班级详情", result)
+	}
+}

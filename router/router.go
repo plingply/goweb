@@ -32,16 +32,18 @@ func init() {
 		group.POST("/zuowen/info", zuowen.GetInfo)
 
 		group.Middleware(middleware.JWTAuth)
+
 		group.GET("/user/info", user.Info)
 		group.POST("/signout", user.Signout)
 		group.POST("/user/update", user.UpdateInfo)
 
-		group.GET("/school/list", school_user.GetSchoolList)
-
-		group.GET("/school/campus/list", campus.GetCampusList)
-		group.GET("/school/campus/simple/list", campus.GetCampusSimpleList)
-		group.POST("/school/campus/update", campus.UpdateCampus)
-		group.POST("/school/campus/create", campus.CreateCampus)
+		group.Group("/school", func(group *ghttp.RouterGroup) {
+			group.GET("/list", school_user.GetSchoolList)
+			group.GET("/campus/list", campus.GetCampusList)
+			group.GET("/campus/simple/list", campus.GetCampusSimpleList)
+			group.POST("/campus/update", campus.UpdateCampus)
+			group.POST("/campus/create", campus.CreateCampus)
+		})
 
 		group.GET("/teacher/list", school_user.GetTeacherList)
 		group.POST("/teacher/update", school_user.UpdateTeacher)
@@ -49,6 +51,7 @@ func init() {
 
 		group.GET("/class/list", class.GetClassList)
 		group.GET("/class/simple/list", class.GetClassSimpleList)
+		group.GET("/class/info", class.GetClassInfo)
 		group.POST("/class/update", class.UpdateClass)
 		group.POST("/class/create", class.CreateClass)
 		group.GET("/class/member/list", class_member.GetClassMemeberList)
