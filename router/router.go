@@ -32,6 +32,7 @@ func init() {
 		group.POST("/login", user.Login)
 		group.POST("/signup", user.SignUp)
 		group.POST("/zuowen/info", zuowen.GetInfo)
+		group.POST("/peotry/info", peotry.GetInfo)
 
 		group.Middleware(middleware.JWTAuth)
 
@@ -79,6 +80,7 @@ func init() {
 
 		group.POST("/peotry/sync", peotry.CreatePeotry)
 		group.GET("/peotry/lastid", peotry.GetPeotryLastId)
+		group.GET("/peotry/list", peotry.GetPeotryList)
 
 		group.GET("/course/list", course.GetCourseList)
 	})

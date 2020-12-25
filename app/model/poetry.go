@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 14:17:21
- * @LastEditTime: 2020-12-25 15:46:11
+ * @LastEditTime: 2020-12-25 16:11:46
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/poetry.go
@@ -48,4 +48,13 @@ func (c *NoteList) CreateNoteList(notelist *NoteList) uint {
 	db := GetDB()
 	db.Create(&notelist)
 	return notelist.Id
+}
+
+// gener string, grade string,
+func (z *Peotry) GetPeotryList(page, limit uint) ([]*Peotry, int) {
+	var peotry []*Peotry
+	var total int
+	db := GetDB()
+	db.Table("peotry").Order("peotry_id desc").Count(&total).Offset((page - 1) * limit).Limit(limit).Find(&peotry)
+	return peotry, total
 }
