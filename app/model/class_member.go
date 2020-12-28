@@ -1,5 +1,7 @@
 package model
 
+import "github.com/gogf/gf/os/gtime"
+
 type ClassMember struct {
 	Id         uint   `gorm:"AUTO_INCREMENT" json:"id"`
 	SchoolId   uint   `gorm:"school_id" json:"school_id"` // 学校ID
@@ -27,16 +29,42 @@ type ClassMemberList struct {
 	Model
 }
 
-func (c *ClassMember) GetClassMemberList(school_id, campus_id, class_id, page, limit uint) (classMemberList []*ClassMemberList, total uint) {
+func (c *ClassMember) GetClassMemberList(class_id, status, page, limit uint) (classMemberList []*ClassMemberList, total uint) {
 	db := GetDB()
 	// isAdmin := CheckSchoolAdmin(schoolId, user_id)
-	db.Table("class_member").
+	db = db.Table("class_member").
 		Select("class_member.*, student.student_name").
-		Where("class_member.school_id = ?", school_id).
-		Where("class_member.campus_id = ?", campus_id).
-		Where("class_member.class_id = ?", class_id).
+		Where("class_member.class_id = ?", class_id)
+	if status != 0 {
+		db = db.Where("class_member.status = ?", status)
+	}
+	db.Where("class_member.deleted_at IS NULL").
 		Joins("left join student on class_member.student_id = student.id").
 		Count(&total).
 		Offset((page - 1) * limit).Limit(limit).Scan(&classMemberList)
 	return classMemberList, total
+}
+
+func (c *ClassMember) CreateClassMember(member *ClassMember) (id uint) {
+	db := GetDB()
+	db.Create(&member)
+	return member.Id
+}
+
+func (c *ClassMember) UpdateClassMember(id, status uint) bool {
+	db := GetDB()
+	var member ClassMember
+	db = db.Model(&member).Where("id = ?", id)
+	if status == 2 {
+		db = db.Update("leave_at", gtime.TimestampMilliStr())
+	}
+	db.Update("status", status)
+	return true
+}
+
+func (c *ClassMember) IsExistClassMember(class_id, student_id uint) uint {
+	db := GetDB()
+	var member ClassMember
+	db.Where("class_id = ?", class_id).Where("student_id = ?", student_id).Find(&member)
+	return member.Id
 }
