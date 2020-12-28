@@ -20,7 +20,7 @@ func JWTAuth(r *ghttp.Request) {
 	}
 	fmt.Println("token:", token)
 	if token == "" {
-		response.JsonExit(r, 1, "身份已过期")
+		response.JsonExit(r, 50008, "身份已过期")
 	}
 
 	j := jwt.NewJWT()
