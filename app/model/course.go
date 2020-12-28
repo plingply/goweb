@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:16:42
- * @LastEditTime: 2020-12-25 11:36:39
+ * @LastEditTime: 2020-12-28 17:36:32
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/course.go
@@ -15,8 +15,8 @@ type Course struct {
 	SubjectId  string `gorm:"subject_id" json:"subject_id"`
 	ClassId    string `gorm:"class_id" json:"class_id"`
 	CourseType string `gorm:"course_type;size:1"   json:"course_type"` // 1 班课 2学员课
-	StartTime  uint   `gorm:"start_time;default:0"   json:"start_time"`
-	EndTime    uint   `gorm:"end_time;default:0"   json:"end_time"`
+	StartTime  uint   `gorm:"start_time;default:0;type:BIGINT"   json:"start_time"`
+	EndTime    uint   `gorm:"end_time;default:0;type:BIGINT"   json:"end_time"`
 	Len        uint   `gorm:"len"   json:"len"` // 时长
 	Model
 }
@@ -32,6 +32,7 @@ type CourseList struct {
 	CourseType  string `json:"course_type"` // 1 班课 2学员课
 	StartTime   uint   `json:"start_time"`
 	EndTime     uint   `json:"end_time"`
-	Len         uint   `json:"len"` // 时长
+	Len         uint   `json:"len"`    // 时长
+	Status      uint   `json:"status"` // 1 未上课 2 上课中 3已下课
 	Model
 }

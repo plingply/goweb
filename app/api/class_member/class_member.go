@@ -13,11 +13,10 @@ func GetClassMemeberList(r *ghttp.Request) {
 
 	page := r.GetQueryUint("page")
 	limit := r.GetQueryUint("limit")
-	school_id := r.GetQueryUint("school_id")
-	campus_id := r.GetQueryUint("campus_id")
+	status := r.GetQueryUint("status")
 	class_id := r.GetQueryUint("class_id")
 
-	if result, total, err := class_member.GetClassMemeberList(school_id, campus_id, class_id, page, limit); err != nil {
+	if result, total, err := class_member.GetClassMemeberList(class_id, status, page, limit); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	} else {
 		var resp = make(map[string]interface{})
@@ -49,6 +48,17 @@ func CreateClassMemeber(r *ghttp.Request) {
 	}
 
 	if result, err := class_member.CreateClassMember(&classMember); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "ok", result)
+	}
+}
+
+func LeaveClassMember(r *ghttp.Request) {
+	student_id := r.GetQueryUint("student_id")
+	class_id := r.GetQueryUint("class_id")
+	status := r.GetQueryUint("status")
+	if result, err := class_member.LeaveClassMember(class_id, student_id, status); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	} else {
 		response.JsonExit(r, 0, "ok", result)
