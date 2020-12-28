@@ -3,13 +3,24 @@
 	Address     = ":8199"
 	ServerRoot  = "public"
 	ServerAgent = "gf-app"
-	LogPath     = "/tmp/log/gf-app/server"
+    LogPath             = "/tmp/log/gf-app/server"                 # 日志文件存储目录路径，建议使用绝对路径。默认为空，表示关闭
+    LogStdout           = true               # 日志是否输出到终端。默认为true
+    ErrorStack          = true               # 当Server捕获到异常时是否记录堆栈信息到日志中。默认为true
+    ErrorLogEnabled     = true               # 是否记录异常日志信息到日志中。默认为true
+    ErrorLogPattern     = "error-{Ymd}.log"  # 异常错误日志文件格式。默认为"error-{Ymd}.log"
+    AccessLogEnabled    = true              # 是否记录访问日志。默认为false
+    AccessLogPattern    = "access-{Ymd}.log" # 访问日志文件格式。默认为"access-{Ymd}.log"
 
 # Logger.
 [logger]
     Path        = "/tmp/log/gf-app"
     Level       = "all"
     Stdout      = true
+    [logger.sqlogger]
+        path   = "/tmp/log/gf-app/sql"
+        level  = "all"
+        stdout = true
+
 
 # Template.
 [viewer]

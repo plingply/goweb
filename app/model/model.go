@@ -10,11 +10,22 @@ import (
 
 var db *gorm.DB
 
+type Logger struct {
+}
+
 func GetDB() *gorm.DB {
 	return db
 }
 
+func (logger Logger) Print(values ...interface{}) {
+	g.Log("sqlogger").Error(values)
+}
+
 func init() {
+	initDBtoDefault()
+}
+
+func initDBtoDefault() {
 	var err error
 	user := g.Cfg().GetString("database.user")
 	databasetype := g.Cfg().GetString("database.type")
@@ -23,7 +34,7 @@ func init() {
 	port := g.Cfg().GetString("database.port")
 	tablename := g.Cfg().GetString("database.tablename")
 	urlStr := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + tablename + "?charset=utf8&parseTime=True&loc=Local"
-	fmt.Println("mysqp=>", databasetype, "----", urlStr)
+
 	db, err = gorm.Open(databasetype, urlStr)
 
 	if err != nil {
@@ -38,6 +49,7 @@ func init() {
 	db.SingularTable(true)        //表生成结尾不带s
 	// 启用Logger，显示详细日志
 	db.LogMode(true)
+	db.SetLogger(Logger{})
 	Createtable()
 }
 
