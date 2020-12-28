@@ -58,6 +58,7 @@ func init() {
 		group.POST("/class/update", class.UpdateClass)
 		group.POST("/class/create", class.CreateClass)
 		group.GET("/class/member/list", class_member.GetClassMemeberList)
+		group.POST("/class/member/create", class_member.CreateClassMemeber)
 
 		group.GET("/student/list", student.GetStudentList)
 		group.POST("/student/update", student.UpdateStudent)

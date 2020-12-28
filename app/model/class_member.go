@@ -40,3 +40,19 @@ func (c *ClassMember) GetClassMemberList(school_id, campus_id, class_id, page, l
 		Offset((page - 1) * limit).Limit(limit).Scan(&classMemberList)
 	return classMemberList, total
 }
+
+func (c *ClassMember) CreateClassMember(member *ClassMember) (id uint) {
+	db := GetDB()
+	db.Create(&member)
+	return member.Id
+}
+
+func (c *ClassMember) IsExistClassMember(class_id, student_id uint) bool {
+	db := GetDB()
+	var member ClassMember
+	db.Where("class_id = ?", class_id).Where("student_id = ?", student_id).Find(&member)
+	if member.Id == 0 {
+		return false
+	}
+	return true
+}
