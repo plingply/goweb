@@ -26,12 +26,6 @@ func GetTeacherList(schoolId, campusId, page, limit uint) (result interface{}, t
 	if campusId == 0 {
 		return nil, 0, errors.New("校区id不能为空")
 	}
-	if page <= 0 {
-		return nil, 0, errors.New("参数错误")
-	}
-	if limit <= 0 {
-		return nil, 0, errors.New("参数错误")
-	}
 	var schoolUser *model.SchoolUser
 	result, total = schoolUser.GetTeacherList(schoolId, campusId, page, limit)
 

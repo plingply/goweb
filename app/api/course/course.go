@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:46:02
- * @LastEditTime: 2020-12-28 17:14:22
+ * @LastEditTime: 2020-12-29 15:11:05
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/course/course.go
@@ -9,6 +9,7 @@
 package course
 
 import (
+	"goframe-web/app/model"
 	"goframe-web/app/service/course"
 	"goframe-web/library/response"
 
@@ -38,4 +39,13 @@ func GetCourseList(r *ghttp.Request) {
 	resp["limit"] = limit
 
 	response.JsonExit(r, 0, "ok", resp)
+}
+
+func CheckCourse(r *ghttp.Request) {
+	var paikeParam []*model.PaikeParam
+	if err := r.Parse(&paikeParam); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	}
+	paikeParams := course.CheckCourse(paikeParam)
+	response.JsonExit(r, 0, "ok", paikeParams)
 }

@@ -24,7 +24,10 @@ func (c *SchoolUser) GetTeacherList(schoolId, campusId, page, limit uint) ([]*Sc
 	if campusId != 0 {
 		db = db.Where("campus_id = ?", campusId)
 	}
-	db.Offset((page - 1) * limit).Limit(limit).Find(&schoolUser)
+	if page > 0 && limit > 0 {
+		db = db.Offset((page - 1) * limit).Limit(limit)
+	}
+	db.Find(&schoolUser)
 
 	return schoolUser, total
 }

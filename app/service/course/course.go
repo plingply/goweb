@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:46:41
- * @LastEditTime: 2020-12-28 17:41:21
+ * @LastEditTime: 2020-12-29 17:24:41
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/service/course/course.go
@@ -11,6 +11,7 @@ package course
 import (
 	"errors"
 	"goframe-web/app/model"
+	"time"
 
 	"github.com/gogf/gf/os/gtime"
 )
@@ -65,4 +66,13 @@ func GetCourseList(school_id, campus_id, class_id, start_time, end_time, page, l
 	}
 
 	return
+}
+
+func CheckCourse(courseList []*model.PaikeParam) []*model.PaikeParam {
+	var course model.Course
+	for _, v := range courseList {
+		course.CheckCourse(v)
+	}
+	time.Sleep(1000000000)
+	return courseList
 }

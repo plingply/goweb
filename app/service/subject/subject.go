@@ -16,13 +16,6 @@ func GetSubjectList(school_id, campus_id, page, limit uint) (result interface{},
 		return nil, 0, errors.New("校区id不能为空")
 	}
 
-	if page <= 0 {
-		return nil, 0, errors.New("参数错误")
-	}
-	if limit <= 0 {
-		return nil, 0, errors.New("参数错误")
-	}
-
 	var subject *model.Subject
 	result, total = subject.GetSubjectList(school_id, campus_id, page, limit)
 
