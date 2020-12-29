@@ -49,3 +49,14 @@ func CheckCourse(r *ghttp.Request) {
 	paikeParams := course.CheckCourse(paikeParam)
 	response.JsonExit(r, 0, "ok", paikeParams)
 }
+
+func AddCourse(r *ghttp.Request) {
+	var paikeParam []*model.PaikeParam
+	if err := r.Parse(&paikeParam); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	}
+	if err := course.AddCourse(paikeParam); err != nil {
+		response.JsonExit(r, 1, err.Error())
+	}
+	response.JsonExit(r, 0, "ok", nil)
+}

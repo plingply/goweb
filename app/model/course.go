@@ -12,14 +12,15 @@ type Course struct {
 	Id          uint   `gorm:"AUTO_INCREMENT" json:"id"`
 	SchoolId    uint   `gorm:"school_id" json:"school_id"` // 学校ID
 	CampusId    uint   `gorm:"campus_id" json:"campus_id"` // 学校ID
-	SubjectId   string `gorm:"subject_id" json:"subject_id"`
-	ClassId     string `gorm:"class_id" json:"class_id"`
+	SubjectId   uint   `gorm:"subject_id" json:"subject_id"`
+	ClassId     uint   `gorm:"class_id" json:"class_id"`
 	TeacherId   uint   `gorm:"teacher_id" json:"teacher_id"`
-	ClassroomId string `gorm:"classroom_id" json:"classroom_id"`
-	CourseType  string `gorm:"course_type;size:1"   json:"course_type"` // 1 班课 2学员课
+	ClassroomId uint   `gorm:"classroom_id" json:"classroom_id"`
+	CourseType  uint   `gorm:"course_type;size:1"   json:"course_type"` // 1 班课 2学员课
 	StartTime   uint   `gorm:"start_time;default:0;type:BIGINT"   json:"start_time"`
 	EndTime     uint   `gorm:"end_time;default:0;type:BIGINT"   json:"end_time"`
-	Len         uint   `gorm:"len"   json:"len"` // 时长
+	Len         uint   `gorm:"len"   json:"len"`           // 时长
+	Note        string `gorm:"len;size:200"   json:"note"` // 时长
 	Model
 }
 
@@ -40,6 +41,7 @@ type CourseList struct {
 	EndTime       uint   `json:"end_time"`
 	Len           uint   `json:"len"`    // 时长
 	Status        uint   `json:"status"` // 1 未上课 2 上课中 3已下课
+	Note          string `json:"note"`   // 时长
 	Model
 }
 
@@ -49,9 +51,11 @@ type PaikeParam struct {
 	ClassID     uint   `json:"class_id"`
 	ClassroomID uint   `json:"classroom_id"`
 	TeacherID   uint   `json:"teacher_id"`
+	SubjectID   uint   `json:"subject_id"`
 	Len         uint   `json:"len"`
 	StartTime   uint   `json:"start_time"`
 	Type        uint   `json:"type"`
+	Note        string `json:"note"` // 时长
 	Conflict    string `json:"conflict"`
 }
 
@@ -69,8 +73,6 @@ func (c *Course) CheckCourse(course *PaikeParam) *PaikeParam {
 			return course
 		}
 	}
-
-	// SELECT * FROM `course` WHERE `course`.`deleted_at` IS NULL AND (class_id = 1) AND ((start_time < 1608187186600 AND end_time >= 1608187186600) OR (start_time >= 1608187186600 AND start_time <= 1608189886600))
 
 	if course.TeacherID > 0 {
 		var cx []Course
@@ -91,4 +93,22 @@ func (c *Course) CheckCourse(course *PaikeParam) *PaikeParam {
 	}
 
 	return course
+}
+
+func (c *Course) AddCourse(course *PaikeParam) error {
+	var cmodel Course
+	cmodel.SchoolId = course.SchoolID
+	cmodel.CampusId = course.CampusID
+	cmodel.ClassId = course.ClassID
+	cmodel.TeacherId = course.TeacherID
+	cmodel.SubjectId = course.SubjectID
+	cmodel.ClassroomId = course.ClassroomID
+	cmodel.CourseType = 1
+	cmodel.StartTime = course.StartTime
+	cmodel.Len = course.Len
+	cmodel.EndTime = course.StartTime + cmodel.Len*60000
+
+	db := GetDB()
+	db.Create(&cmodel)
+	return nil
 }

@@ -86,5 +86,6 @@ func init() {
 
 		group.GET("/course/list", course.GetCourseList)
 		group.POST("/course/check", course.CheckCourse)
+		group.POST("/course/add", course.AddCourse)
 	})
 }

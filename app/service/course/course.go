@@ -11,7 +11,6 @@ package course
 import (
 	"errors"
 	"goframe-web/app/model"
-	"time"
 
 	"github.com/gogf/gf/os/gtime"
 )
@@ -73,6 +72,14 @@ func CheckCourse(courseList []*model.PaikeParam) []*model.PaikeParam {
 	for _, v := range courseList {
 		course.CheckCourse(v)
 	}
-	time.Sleep(1000000000)
 	return courseList
+}
+
+func AddCourse(courseList []*model.PaikeParam) error {
+	var course model.Course
+	for _, v := range courseList {
+		err := course.AddCourse(v)
+		return err
+	}
+	return nil
 }
