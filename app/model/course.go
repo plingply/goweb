@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:16:42
- * @LastEditTime: 2020-12-29 18:37:43
+ * @LastEditTime: 2020-12-29 19:14:37
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/course.go
@@ -59,10 +59,11 @@ func (c *Course) CheckCourse(course *PaikeParam) *PaikeParam {
 
 	db := GetDB()
 	endTime := course.StartTime + course.Len*60000
+	db = db.Table("course").Where("start_time < ? && end_time >= ?", course.StartTime, course.StartTime).Or("start_time >= ? && start_time <= ?", course.StartTime, endTime)
 
 	if course.ClassID > 0 {
 		var cx []Course
-		db.Table("course").Where("start_time < ? && end_time >= ?", course.StartTime, course.StartTime).Or("start_time >= ? && start_time <= ?", course.StartTime, endTime).Find(&cx)
+		db.Where("class_id = ?", course.ClassID).Find(&cx)
 		if len(cx) > 0 {
 			course.Conflict = "class"
 			return course
@@ -71,23 +72,23 @@ func (c *Course) CheckCourse(course *PaikeParam) *PaikeParam {
 
 	// SELECT * FROM `course` WHERE `course`.`deleted_at` IS NULL AND (class_id = 1) AND ((start_time < 1608187186600 AND end_time >= 1608187186600) OR (start_time >= 1608187186600 AND start_time <= 1608189886600))
 
-	// if course.TeacherID > 0 {
-	// 	var cx []Course
-	// 	db.Raw("SELECT * FROM course WHERE course.deleted_at IS NULL && teacher_id = ? && ((start_time < ? && end_time >= ?) || (start_time >= ? && start_time <= ?))", course.TeacherID, course.StartTime, course.StartTime, course.StartTime, endTime).Find(&cx)
-	// 	if len(cx) > 0 {
-	// 		course.Conflict = "teacher"
-	// 		return course
-	// 	}
-	// }
+	if course.TeacherID > 0 {
+		var cx []Course
+		db.Where("teacher_id = ?", course.TeacherID).Find(&cx)
+		if len(cx) > 0 {
+			course.Conflict = "teacher"
+			return course
+		}
+	}
 
-	// if course.ClassroomID > 0 {
-	// 	var cx []Course
-	// 	db.Raw("SELECT * FROM course WHERE course.deleted_at IS NULL && classroom_id = ? && ((start_time < ? && end_time >= ?) || (start_time >= ? && start_time <= ?))", course.ClassroomID, course.StartTime, course.StartTime, course.StartTime, endTime).Find(&cx)
-	// 	if len(cx) > 0 {
-	// 		course.Conflict = "classroom"
-	// 		return course
-	// 	}
-	// }
+	if course.ClassroomID > 0 {
+		var cx []Course
+		db.Where("classroom_id = ?", course.ClassroomID).Find(&cx)
+		if len(cx) > 0 {
+			course.Conflict = "classroom"
+			return course
+		}
+	}
 
 	return course
 }

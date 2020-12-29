@@ -48,8 +48,8 @@ func initDBtoDefault() {
 	db.DB().SetMaxOpenConns(2000) //设置最大闲置个数
 	db.SingularTable(true)        //表生成结尾不带s
 	// 启用Logger，显示详细日志
-	db.LogMode(false)
-	db.SetLogger(Logger{})
+	db.LogMode(true)
+	// db.SetLogger(Logger{})
 	Createtable()
 }
 
