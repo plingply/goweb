@@ -6,7 +6,8 @@ type Card struct {
 	CampusId uint   `gorm:"campus_id" json:"campus_id"`           // 学校ID
 	CardName string `gorm:"card_name;size:20"   json:"card_name"` // 学校名称
 	Remark   string `gorm:"remark;size:100"   json:"remark"`
-	Status   string `gorm:"status;size:1"   json:"status"`
+	Status   uint   `gorm:"status;size:1"   json:"status"`
+	CardType uint   `gorm:"card_type;size:1"   json:"card_type"` // 1 课时卡 2储值卡 3期限卡
 	Model
 }
 
@@ -36,8 +37,17 @@ func (c *Card) UpdateCard(card_id uint, data map[string]interface{}) bool {
 	return true
 }
 
-func (c *Card) CreateCard(card *Card) bool {
+func (c *Card) CreateCard(card *Card) error {
 	db := GetDB()
 	db.Create(&card)
-	return true
+	return nil
+}
+
+func (c *Card) IsExist(campus_id, card_type uint) bool {
+	var mcardlist []*Card
+	db.Table("card").Where("campus_id = ?", campus_id).Where("card_type = ?", card_type).Find(&mcardlist)
+	if len(mcardlist) > 0 {
+		return true
+	}
+	return false
 }

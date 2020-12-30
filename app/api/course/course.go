@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:46:02
- * @LastEditTime: 2020-12-29 15:11:05
+ * @LastEditTime: 2020-12-30 10:30:13
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/course/course.go
@@ -55,8 +55,9 @@ func AddCourse(r *ghttp.Request) {
 	if err := r.Parse(&paikeParam); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
-	if err := course.AddCourse(paikeParam); err != nil {
+	if succTotal, err := course.AddCourse(paikeParam); err != nil {
 		response.JsonExit(r, 1, err.Error())
+	} else {
+		response.JsonExit(r, 0, "ok", succTotal)
 	}
-	response.JsonExit(r, 0, "ok", nil)
 }

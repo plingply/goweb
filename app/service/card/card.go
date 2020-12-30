@@ -48,6 +48,10 @@ func UpdateCard(card_id uint, data map[string]interface{}) (re bool, msg error) 
 		return false, errors.New("参数错误 card_name")
 	}
 
+	if data["card_name"] == nil {
+		return false, errors.New("参数错误 card_name")
+	}
+
 	if data["remark"] != nil && utf8.RuneCountInString(data["remark"].(string)) > 100 {
 		return false, errors.New("参数错误 remark")
 	}
@@ -58,18 +62,13 @@ func UpdateCard(card_id uint, data map[string]interface{}) (re bool, msg error) 
 	return
 }
 
-func CreateCard(school_id, campus_id uint, card *model.Card) (re bool, msg error) {
-
-	if school_id <= 0 {
-		return false, errors.New("参数错误")
-	}
-
-	if campus_id <= 0 {
-		return false, errors.New("参数错误")
-	}
+func CreateCard(card *model.Card) error {
 
 	var cardModel *model.Card
-	re = cardModel.CreateCard(card)
-
-	return
+	if isExist := cardModel.IsExist(card.CampusId, card.CardType); isExist {
+		return errors.New("该类学员卡已存在")
+	} else {
+		err := cardModel.CreateCard(card)
+		return err
+	}
 }

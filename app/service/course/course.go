@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:46:41
- * @LastEditTime: 2020-12-29 17:24:41
+ * @LastEditTime: 2020-12-30 10:54:57
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/service/course/course.go
@@ -11,6 +11,7 @@ package course
 import (
 	"errors"
 	"goframe-web/app/model"
+	"sync"
 
 	"github.com/gogf/gf/os/gtime"
 )
@@ -69,17 +70,30 @@ func GetCourseList(school_id, campus_id, class_id, start_time, end_time, page, l
 
 func CheckCourse(courseList []*model.PaikeParam) []*model.PaikeParam {
 	var course model.Course
+	var wg sync.WaitGroup
 	for _, v := range courseList {
-		course.CheckCourse(v)
+		wg.Add(1)
+		go func(v *model.PaikeParam) {
+			course.CheckCourse(v)
+			wg.Done()
+		}(v)
 	}
+	wg.Wait()
 	return courseList
 }
 
-func AddCourse(courseList []*model.PaikeParam) error {
+func AddCourse(courseList []*model.PaikeParam) (uint, error) {
 	var course model.Course
+	var count uint = 0
+	var wg sync.WaitGroup
 	for _, v := range courseList {
-		err := course.AddCourse(v)
-		return err
+		count++
+		wg.Add(1)
+		go func(v *model.PaikeParam) {
+			course.AddCourse(v)
+			wg.Done()
+		}(v)
 	}
-	return nil
+	wg.Wait()
+	return count, nil
 }

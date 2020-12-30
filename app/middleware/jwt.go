@@ -40,7 +40,7 @@ func JWTAuth(r *ghttp.Request) {
 	userId := r.GetCtxVar("user_id").Uint()
 	var usertoken model.UserToken
 	if bol := usertoken.Vtoken(userId, token); !bol {
-		response.JsonExit(r, 1, "身份已过期")
+		response.JsonExit(r, 50008, "身份已过期")
 	}
 
 	r.Middleware.Next()

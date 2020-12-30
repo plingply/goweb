@@ -1,12 +1,17 @@
 package model
 
 type Subject struct {
-	Id          uint   `gorm:"AUTO_INCREMENT" json:"id"`
-	SchoolId    uint   `gorm:"school_id" json:"school_id"`                 // 学校ID
-	CampusId    uint   `gorm:"campus_id" json:"campus_id"`                 // 学校ID
-	SubjectName string `gorm:"subject_name;size:20"   json:"subject_name"` // 学校名称
-	Remark      string `gorm:"remark;size:100"   json:"remark"`            // 学校名称
-	Status      string `gorm:"status;size:1"   json:"status"`
+	Id          uint    `gorm:"AUTO_INCREMENT" json:"id"`
+	SchoolId    uint    `gorm:"school_id" json:"school_id"`                 // 学校ID
+	CampusId    uint    `gorm:"campus_id" json:"campus_id"`                 // 学校ID
+	SubjectName string  `gorm:"subject_name;size:20"   json:"subject_name"` // 学校名称
+	Remark      string  `gorm:"remark;size:100"   json:"remark"`            // 学校名称
+	Status      string  `gorm:"status;size:1"   json:"status"`
+	Ks          uint    `gorm:"ks" json:"ks"` // 1 勾选 2 取消
+	KsValue     float64 `gorm:"ks_value" json:"ks_value"`
+	Cz          uint    `gorm:"cz" json:"cz"` // 1 勾选 2 取消
+	CzValue     float64 `gorm:"cz_value" json:"cz_value"`
+	Qx          uint    `gorm:"qx" json:"qx"` // 1 勾选 2 取消
 	Model
 }
 

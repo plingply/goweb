@@ -74,9 +74,6 @@ func UpdateCard(r *ghttp.Request) {
 
 func CreateCard(r *ghttp.Request) {
 
-	school_id := r.GetQueryUint("school_id")
-	campus_id := r.GetQueryUint("campus_id")
-
 	var (
 		data      *CardRequest
 		cardParam *model.Card
@@ -90,11 +87,11 @@ func CreateCard(r *ghttp.Request) {
 		response.JsonExit(r, 1, err.Error())
 	}
 
-	result, err := card.CreateCard(school_id, campus_id, cardParam)
+	err := card.CreateCard(cardParam)
 
 	if err != nil {
-		response.JsonExit(r, 0, err.Error())
+		response.JsonExit(r, 1, err.Error())
 	}
 
-	response.JsonExit(r, 0, "ok", result)
+	response.JsonExit(r, 0, "ok", nil)
 }

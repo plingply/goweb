@@ -6,4 +6,9 @@ type SubjectRequest struct {
 	CampusID    uint   `v:"required#校区不能为空"`
 	Remark      string `v:"length:0,100#备注长度应当在:min到:max之间"`
 	Status      string
+	Ks          uint
+	KsValue     float64
+	Cz          uint
+	CzValue     float64
+	Qx          uint
 }

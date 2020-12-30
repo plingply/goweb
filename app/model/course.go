@@ -1,12 +1,14 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-25 11:16:42
- * @LastEditTime: 2020-12-29 19:14:37
+ * @LastEditTime: 2020-12-30 11:20:18
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/course.go
  */
 package model
+
+import "errors"
 
 type Course struct {
 	Id          uint   `gorm:"AUTO_INCREMENT" json:"id"`
@@ -28,7 +30,7 @@ type CourseList struct {
 	Id            uint   `json:"id"`
 	SchoolId      uint   `json:"school_id"` // 学校ID
 	CampusId      uint   `json:"campus_id"` // 学校ID
-	SubjectId     string `json:"subject_id"`
+	SubjectId     uint   `json:"subject_id"`
 	SubjectName   string `json:"subject_name"`
 	ClassId       uint   `json:"class_id"`
 	ClassName     string `json:"class_name"`
@@ -36,7 +38,7 @@ type CourseList struct {
 	TeacherName   string `json:"teacher_name"`
 	ClassroomId   uint   `json:"classroom_id"`
 	ClassroomName string `json:"classname_name"`
-	CourseType    string `json:"course_type"` // 1 班课 2学员课
+	CourseType    uint   `json:"course_type"` // 1 班课 2学员课
 	StartTime     uint   `json:"start_time"`
 	EndTime       uint   `json:"end_time"`
 	Len           uint   `json:"len"`    // 时长
@@ -110,5 +112,27 @@ func (c *Course) AddCourse(course *PaikeParam) error {
 
 	db := GetDB()
 	db.Create(&cmodel)
-	return nil
+
+	if cmodel.Id != 0 {
+		// 班课
+		if cmodel.CourseType == 1 {
+			go func(id uint) {
+				var classMember ClassMember
+				memberList, _ := classMember.GetClassMemberList(cmodel.ClassId, 1, 0, 0)
+				for _, v := range memberList {
+					var courseMember CourseMember
+					courseMember.CampusId = cmodel.CampusId
+					courseMember.SchoolId = cmodel.SchoolId
+					courseMember.StudentId = v.StudentId
+					courseMember.CourseId = id
+					courseMember.CreateMember(&courseMember)
+				}
+			}(cmodel.Id)
+		}
+
+		return nil
+	} else {
+		return errors.New("创建失败")
+	}
+
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-23 14:13:01
- * @LastEditTime: 2020-12-25 13:34:56
+ * @LastEditTime: 2020-12-30 14:46:10
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/model/student.go

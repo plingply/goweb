@@ -49,6 +49,26 @@ func UpdateSubject(r *ghttp.Request) {
 		data["status"] = r.GetFormString("status")
 	}
 
+	if r.GetFormBool("ks") {
+		data["ks"] = r.GetFormUint("ks")
+	}
+
+	if r.GetFormBool("ks_value") {
+		data["ks_value"] = r.GetFormFloat64("ks_value")
+	}
+
+	if r.GetFormBool("cz") {
+		data["cz"] = r.GetFormUint("cz")
+	}
+
+	if r.GetFormBool("cz_value") {
+		data["cz_value"] = r.GetFormFloat64("cz_value")
+	}
+
+	if r.GetFormBool("qx") {
+		data["qx"] = r.GetFormUint("qx")
+	}
+
 	result, err := subject.UpdateSubject(subject_id, data)
 
 	if err != nil {

@@ -38,10 +38,13 @@ func (c *ClassMember) GetClassMemberList(class_id, status, page, limit uint) (cl
 	if status != 0 {
 		db = db.Where("class_member.status = ?", status)
 	}
-	db.Where("class_member.deleted_at IS NULL").
+	db = db.Where("class_member.deleted_at IS NULL").
 		Joins("left join student on class_member.student_id = student.id").
-		Count(&total).
-		Offset((page - 1) * limit).Limit(limit).Scan(&classMemberList)
+		Count(&total)
+	if page > 0 && limit > 0 {
+		db = db.Offset((page - 1) * limit).Limit(limit)
+	}
+	db.Scan(&classMemberList)
 	return classMemberList, total
 }
 
