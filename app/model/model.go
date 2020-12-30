@@ -71,6 +71,7 @@ func Createtable() {
 		&Peotry{},
 		&NoteList{},
 		&CourseMember{},
+		&StudentCard{},
 	)
 }
 

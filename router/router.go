@@ -9,6 +9,7 @@ import (
 	"goframe-web/app/api/peotry"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
+	"goframe-web/app/api/student_card"
 	"goframe-web/app/api/subject"
 	"goframe-web/app/api/upload_file"
 	"goframe-web/app/api/user"
@@ -87,5 +88,7 @@ func init() {
 		group.GET("/course/list", course.GetCourseList)
 		group.POST("/course/check", course.CheckCourse)
 		group.POST("/course/add", course.AddCourse)
+
+		group.POST("/student/card/activate", student_card.ActivateCard)
 	})
 }
