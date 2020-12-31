@@ -1,6 +1,7 @@
 package card
 
 import (
+	"fmt"
 	"goframe-web/app/model"
 	"goframe-web/app/service/card"
 	"goframe-web/library/response"
@@ -54,6 +55,8 @@ func UpdateCard(r *ghttp.Request) {
 	if r.GetFormBool("card_name") {
 		data["card_name"] = r.GetFormString("card_name")
 	}
+
+	fmt.Println("remark: &v", r.GetFormBool("remark"))
 
 	if r.GetFormBool("remark") {
 		data["remark"] = r.GetFormString("remark")

@@ -13,13 +13,13 @@ type Student struct {
 	SchoolId    uint   `gorm:"school_id" json:"school_id"`                 // 学校ID
 	CampusId    uint   `gorm:"campus_id" json:"campus_id"`                 // 学校ID
 	StudentName string `gorm:"student_name;size:20"   json:"student_name"` // 学校名称
-	Sex         string `gorm:"sex;size:1"   json:"sex"`
+	Sex         uint   `gorm:"sex;size:1"   json:"sex"`
 	Avatar      string `gorm:"avatar;size:200"   json:"avatar"`
 	Address     string `gorm:"address;size:50"   json:"address"`
 	SchoolName  string `gorm:"school_name;size:50"   json:"school_name"`
-	Birthday    string `gorm:"birthday;size:20" json:"birthday"`
+	Birthday    uint   `gorm:"birthday;type:BIGINT" json:"birthday"`
 	Remark      string `gorm:"remark;size:100"   json:"remark"`
-	Status      string `gorm:"status;size:1"   json:"status"`
+	Status      uint   `gorm:"status;size:1"   json:"status"`
 	Model
 }
 

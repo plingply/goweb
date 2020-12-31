@@ -7,12 +7,12 @@ type SchoolUser struct {
 	CampusId    uint   `gorm:"campus_id" json:"campus_id"`
 	SchoolId    uint   `gorm:"school_id" json:"school_id"` // 学校ID
 	TeacherName string `gorm:"teacher_name;size:10" json:"teacher_name"`
-	Sex         string `gorm:"sex;size:1" json:"sex"`
+	Sex         uint   `gorm:"sex;size:1" json:"sex"`
 	Phone       string `gorm:"phone;size:11" json:"phone"`
 	Address     string `gorm:"address;size:50" json:"address"`
 	Identity    string `gorm:"identity;size:10" json:"identity"` // school, campus
-	Birthday    string `gorm:"birthday;size:20" json:"birthday"`
-	EntryAt     string `gorm:"entry_at;size:20" json:"entry_at"`
+	Birthday    uint   `gorm:"birthday;type:BIGINT" json:"birthday"`
+	EntryAt     uint   `gorm:"entry_at;type:BIGINT" json:"entry_at"`
 	Model
 }
 

@@ -3,15 +3,15 @@ package model
 import "github.com/gogf/gf/os/gtime"
 
 type ClassMember struct {
-	Id         uint   `gorm:"AUTO_INCREMENT" json:"id"`
-	SchoolId   uint   `gorm:"school_id" json:"school_id"` // 学校ID
-	CampusId   uint   `gorm:"campus_id" json:"campus_id"` // 学校ID
-	ClassId    uint   `gorm:"class_id" json:"class_id"`
-	StudentId  uint   `gorm:"student_id" json:"student_id"`
-	MemberType string `gorm:"member_type;size:1"   json:"member_type"`
-	EntryAt    string `gorm:"entry_at;size:20" json:"entry_at"`
-	LeaveAt    string `gorm:"leave_at;size:20" json:"leave_at"`
-	Status     uint   `gorm:"status;size:1"   json:"status"`
+	Id         uint `gorm:"AUTO_INCREMENT" json:"id"`
+	SchoolId   uint `gorm:"school_id" json:"school_id"` // 学校ID
+	CampusId   uint `gorm:"campus_id" json:"campus_id"` // 学校ID
+	ClassId    uint `gorm:"class_id" json:"class_id"`
+	StudentId  uint `gorm:"student_id" json:"student_id"`
+	MemberType uint `gorm:"member_type;size:1"   json:"member_type"`
+	EntryAt    uint `gorm:"entry_at;type:BIGINT"" json:"entry_at"`
+	LeaveAt    uint `gorm:"leave_at;type:BIGINT"" json:"leave_at"`
+	Status     uint `gorm:"status;size:1"   json:"status"`
 	Model
 }
 
@@ -22,9 +22,9 @@ type ClassMemberList struct {
 	ClassId     uint   `json:"class_id"`
 	StudentId   uint   `json:"student_id"`
 	StudentName string `json:"student_name"`
-	MemberType  string `json:"member_type"`
-	EntryAt     string `json:"entry_at"`
-	LeaveAt     string `json:"leave_at"`
+	MemberType  uint   `json:"member_type"`
+	EntryAt     uint   `json:"entry_at"`
+	LeaveAt     uint   `json:"leave_at"`
 	Status      uint   `json:"status"`
 	Model
 }

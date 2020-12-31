@@ -5,10 +5,10 @@ type Classs struct {
 	SchoolId  uint   `gorm:"school_id" json:"school_id"`             // 学校ID
 	CampusId  uint   `gorm:"campus_id" json:"campus_id"`             // 学校ID
 	ClassName string `gorm:"class_name;size:20"   json:"class_name"` // 学校名称
-	ClassType string `gorm:"class_type;size:1"   json:"class_type"`
+	ClassType uint   `gorm:"class_type;size:1"   json:"class_type"`
 	Capacity  uint   `gorm:"capacity;size:2;default:0"   json:"capacity"`
 	Remark    string `gorm:"remark;size:100"   json:"remark"`
-	Status    string `gorm:"status;size:1"   json:"status"`
+	Status    uint   `gorm:"status;size:1"   json:"status"`
 	Model
 }
 

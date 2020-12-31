@@ -44,7 +44,7 @@ func CreateClassMember(member *model.ClassMember) (id uint, msg error) {
 		return 0, errors.New("参数错误")
 	}
 
-	if member.MemberType == "" {
+	if member.MemberType == 0 {
 		return 0, errors.New("参数错误")
 	}
 
@@ -52,8 +52,8 @@ func CreateClassMember(member *model.ClassMember) (id uint, msg error) {
 		member.Status = 1
 	}
 
-	if member.EntryAt == "" {
-		member.EntryAt = gtime.TimestampMilliStr()
+	if member.EntryAt == 0 {
+		member.EntryAt = uint(gtime.TimestampMilli())
 	}
 
 	var memberModel *model.ClassMember
