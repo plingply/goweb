@@ -6,6 +6,7 @@ import (
 	"goframe-web/app/api/class"
 	"goframe-web/app/api/class_member"
 	"goframe-web/app/api/course"
+	"goframe-web/app/api/districts"
 	"goframe-web/app/api/peotry"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
@@ -34,6 +35,7 @@ func init() {
 		group.POST("/signup", user.SignUp)
 		group.POST("/zuowen/info", zuowen.GetInfo)
 		group.POST("/peotry/info", peotry.GetInfo)
+		group.GET("/city/:parent_id", districts.GetDistrictsList)
 
 		group.Middleware(middleware.JWTAuth)
 
