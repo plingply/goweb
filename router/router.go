@@ -8,6 +8,7 @@ import (
 	"goframe-web/app/api/course"
 	"goframe-web/app/api/districts"
 	"goframe-web/app/api/peotry"
+	"goframe-web/app/api/school"
 	"goframe-web/app/api/school_user"
 	"goframe-web/app/api/student"
 	"goframe-web/app/api/student_card"
@@ -45,6 +46,7 @@ func init() {
 
 		group.Group("/school", func(group *ghttp.RouterGroup) {
 			group.GET("/list", school_user.GetSchoolList)
+			group.POST("/create", school.CreateSchool)
 			group.GET("/campus/list", campus.GetCampusList)
 			group.GET("/campus/simple/list", campus.GetCampusSimpleList)
 			group.POST("/campus/update", campus.UpdateCampus)

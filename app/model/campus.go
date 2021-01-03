@@ -56,6 +56,6 @@ func (c *Campus) UpdateCampus(campusId uint, data map[string]interface{}) bool {
 
 func (c *Campus) CreateCampus(campus *Campus) bool {
 	db := GetDB()
-	db.Create(&campus)
+	db.Create(campus)
 	return true
 }

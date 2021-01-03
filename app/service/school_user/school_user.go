@@ -48,7 +48,23 @@ func CreateTeacher(campusId uint, schoolUser *model.SchoolUser) (re bool, msg er
 
 	var schoolUserModel model.SchoolUser
 
-	if campusId <= 0 {
+	if schoolUser.SchoolId <= 0 {
+		return false, errors.New("参数错误")
+	}
+
+	if schoolUser.Sex <= 0 {
+		return false, errors.New("参数错误")
+	}
+
+	if schoolUser.Phone == "" {
+		return false, errors.New("参数错误")
+	}
+
+	if schoolUser.TeacherName == "" {
+		return false, errors.New("参数错误")
+	}
+
+	if schoolUser.Identity == "" {
 		return false, errors.New("参数错误")
 	}
 

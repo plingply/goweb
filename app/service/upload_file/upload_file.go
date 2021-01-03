@@ -31,8 +31,8 @@ func OSSUpLoad(file *ghttp.UploadFile) (name string, err error) {
 
 	u1 := cast.ToString(uuid.NewV4())
 	prefix := "." + strings.Split(file.Filename, ".")[1]
-	dst := "../file/" + u1 + prefix
-	// gin 简单做了封装,拷贝了文件流
+	dst := "./" + u1 + prefix
+
 	if err := SaveUploadedFile(file, dst); err != nil {
 		return "", err
 	}

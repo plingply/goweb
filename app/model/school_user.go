@@ -39,7 +39,7 @@ func (c *SchoolUser) UpdateTeacher(teacherId uint, data map[string]interface{}) 
 
 func (c *SchoolUser) CreateTeacher(schoolUser *SchoolUser) bool {
 	db := GetDB()
-	db.Create(&schoolUser)
+	db.Create(schoolUser)
 	return true
 }
 
