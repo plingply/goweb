@@ -37,36 +37,36 @@ func UpdateStudent(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("student_name") {
+	if r.GetForm("student_name") != nil {
 		data["student_name"] = r.GetFormString("student_name")
 	}
 
-	if r.GetFormBool("sex") {
-		data["sex"] = r.GetFormString("sex")
+	if r.GetForm("sex") != nil {
+		data["sex"] = r.GetFormUint("sex")
 	}
 
-	if r.GetFormBool("avatar") {
+	if r.GetForm("avatar") != nil {
 		data["avatar"] = r.GetFormString("avatar")
 	}
 
-	if r.GetFormBool("address") {
+	if r.GetForm("address") != nil {
 		data["address"] = r.GetFormString("address")
 	}
 
-	if r.GetFormBool("school_name") {
+	if r.GetForm("school_name") != nil {
 		data["school_name"] = r.GetFormString("school_name")
 	}
 
-	if r.GetFormBool("birthday") {
-		data["birthday"] = r.GetFormString("birthday")
+	if r.GetForm("birthday") != nil {
+		data["birthday"] = r.GetFormUint("birthday")
 	}
 
-	if r.GetFormBool("remark") {
+	if r.GetForm("remark") != nil {
 		data["remark"] = r.GetFormString("remark")
 	}
 
-	if r.GetFormBool("status") {
-		data["status"] = r.GetFormString("status")
+	if r.GetForm("status") != nil {
+		data["status"] = r.GetFormUint("status")
 	}
 
 	result, err := student.UpdateStudent(student_id, data)

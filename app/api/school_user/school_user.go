@@ -44,23 +44,23 @@ func UpdateTeacher(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("campus_name") {
+	if r.GetForm("campus_name") != nil {
 		data["campus_name"] = r.GetFormString("campus_name")
 	}
 
-	if r.GetFormBool("address") {
+	if r.GetForm("address") != nil {
 		data["address"] = r.GetFormString("address")
 	}
 
-	if r.GetFormBool("sex") {
+	if r.GetForm("sex") != nil {
 		data["sex"] = r.GetFormString("sex")
 	}
 
-	if r.GetFormBool("birthday") {
+	if r.GetForm("birthday") != nil {
 		data["birthday"] = r.GetFormString("birthday")
 	}
 
-	if r.GetFormBool("entry_at") {
+	if r.GetForm("entry_at") != nil {
 		data["entry_at"] = r.GetFormString("entry_at")
 	}
 

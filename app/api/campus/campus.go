@@ -51,23 +51,23 @@ func UpdateCampus(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("campus_name") {
+	if r.GetForm("campus_name") != nil {
 		data["campus_name"] = r.GetFormString("campus_name")
 	}
 
-	if r.GetFormBool("address") {
+	if r.GetForm("address") != nil {
 		data["address"] = r.GetFormString("address")
 	}
 
-	if r.GetFormBool("province") {
+	if r.GetForm("province") != nil {
 		data["province"] = r.GetFormString("province")
 	}
 
-	if r.GetFormBool("city") {
+	if r.GetForm("city") != nil {
 		data["city"] = r.GetFormString("city")
 	}
 
-	if r.GetFormBool("area") {
+	if r.GetForm("area") != nil {
 		data["area"] = r.GetFormString("area")
 	}
 

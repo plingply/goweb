@@ -47,11 +47,11 @@ func UpdateInfo(r *ghttp.Request) {
 	var reqMap = make(map[string]interface{})
 	id := r.GetFormUint("id")
 
-	if r.GetFormBool("nickname") {
+	if r.GetForm("nickname") != nil {
 		reqMap["nickname"] = r.GetFormString("nickname")
 	}
 
-	if r.GetFormBool("password") {
+	if r.GetForm("password") != nil {
 		reqMap["password"] = r.GetFormString("password")
 	}
 

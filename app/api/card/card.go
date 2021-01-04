@@ -52,18 +52,18 @@ func UpdateCard(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("card_name") {
+	if r.GetForm("card_name") != nil {
 		data["card_name"] = r.GetFormString("card_name")
 	}
 
 	fmt.Println("remark: &v", r.GetFormBool("remark"))
 
-	if r.GetFormBool("remark") {
+	if r.GetForm("remark") != nil {
 		data["remark"] = r.GetFormString("remark")
 	}
 
-	if r.GetFormBool("status") {
-		data["status"] = r.GetFormString("status")
+	if r.GetForm("status") != nil {
+		data["status"] = r.GetFormUint("status")
 	}
 
 	result, err := card.UpdateCard(card_id, data)

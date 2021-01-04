@@ -37,35 +37,35 @@ func UpdateSubject(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("subject_name") {
+	if r.GetForm("subject_name") != nil {
 		data["subject_name"] = r.GetFormString("subject_name")
 	}
 
-	if r.GetFormBool("remark") {
+	if r.GetForm("remark") != nil {
 		data["remark"] = r.GetFormString("remark")
 	}
 
-	if r.GetFormBool("status") {
-		data["status"] = r.GetFormString("status")
+	if r.GetForm("status") != nil {
+		data["status"] = r.GetFormUint("status")
 	}
 
-	if r.GetFormBool("ks") {
+	if r.GetForm("ks") != nil {
 		data["ks"] = r.GetFormUint("ks")
 	}
 
-	if r.GetFormBool("ks_value") {
+	if r.GetForm("ks_value") != nil {
 		data["ks_value"] = r.GetFormFloat64("ks_value")
 	}
 
-	if r.GetFormBool("cz") {
+	if r.GetForm("cz") != nil {
 		data["cz"] = r.GetFormUint("cz")
 	}
 
-	if r.GetFormBool("cz_value") {
+	if r.GetForm("cz_value") != nil {
 		data["cz_value"] = r.GetFormFloat64("cz_value")
 	}
 
-	if r.GetFormBool("qx") {
+	if r.GetForm("qx") != nil {
 		data["qx"] = r.GetFormUint("qx")
 	}
 

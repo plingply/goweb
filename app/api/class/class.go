@@ -53,24 +53,24 @@ func UpdateClass(r *ghttp.Request) {
 
 	var data = make(map[string]interface{})
 
-	if r.GetFormBool("class_name") {
+	if r.GetForm("class_name") != nil {
 		data["class_name"] = r.GetFormString("class_name")
 	}
 
-	if r.GetFormBool("class_type") {
+	if r.GetForm("class_type") != nil {
 		data["class_type"] = r.GetFormString("class_type")
 	}
 
-	if r.GetFormBool("capacity") {
+	if r.GetForm("capacity") != nil {
 		data["capacity"] = r.GetFormUint("capacity")
 	}
 
-	if r.GetFormBool("remark") {
+	if r.GetForm("remark") != nil {
 		data["remark"] = r.GetFormString("remark")
 	}
 
-	if r.GetFormBool("status") {
-		data["status"] = r.GetFormString("status")
+	if r.GetForm("status") != nil {
+		data["status"] = r.GetFormUint("status")
 	}
 
 	result, err := class.UpdateClass(class_id, data)
