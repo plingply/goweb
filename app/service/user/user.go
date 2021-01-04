@@ -113,9 +113,18 @@ func Login(passport string, password string) (token string, err error) {
 	mjwt := jwt.NewJWT()
 	token, err = mjwt.CreateToken(claims)
 
+	// 创建usertoken 1
+	var userToken *model.UserToken
+	userToken = userToken.GetUserTokenByUserId(userInfo.Id)
+
+	if userToken.Id == 0 {
+		// 创建usertoken 1
+		userToken.UserId = userInfo.Id
+		userToken.Save()
+	}
+
 	// 更新 token
-	var usertoken model.UserToken
-	_, e := usertoken.Update(userInfo.Id, token)
+	_, e := userToken.Update(userInfo.Id, token)
 	if e != nil {
 		err = e
 		return
