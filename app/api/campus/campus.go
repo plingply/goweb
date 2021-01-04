@@ -60,15 +60,15 @@ func UpdateCampus(r *ghttp.Request) {
 	}
 
 	if r.GetForm("province") != nil {
-		data["province"] = r.GetFormString("province")
+		data["province"] = r.GetFormUint("province")
 	}
 
 	if r.GetForm("city") != nil {
-		data["city"] = r.GetFormString("city")
+		data["city"] = r.GetFormUint("city")
 	}
 
 	if r.GetForm("area") != nil {
-		data["area"] = r.GetFormString("area")
+		data["area"] = r.GetFormUint("area")
 	}
 
 	result, err := campus.UpdateCampus(campusId, data)

@@ -45,15 +45,15 @@ func UpdateCampus(campusId uint, data map[string]interface{}) (re bool, msg erro
 		return false, errors.New("参数错误 address")
 	}
 
-	if data["province"] != nil && utf8.RuneCountInString(data["province"].(string)) > 7 {
+	if data["province"] != nil && data["province"].(uint) == 0 {
 		return false, errors.New("参数错误 province")
 	}
 
-	if data["city"] != nil && utf8.RuneCountInString(data["city"].(string)) > 7 {
+	if data["city"] != nil && data["city"].(uint) == 0 {
 		return false, errors.New("参数错误 city")
 	}
 
-	if data["area"] != nil && utf8.RuneCountInString(data["area"].(string)) > 7 {
+	if data["area"] != nil && data["area"].(uint) == 0 {
 		return false, errors.New("参数错误 area")
 	}
 

@@ -6,9 +6,9 @@ type Campus struct {
 	SchoolId   uint   `gorm:"school_id" json:"school_id"`               // 学校ID
 	CampusName string `gorm:"campus_name;size:20"   json:"campus_name"` // 学校名称
 	Address    string `gorm:"address;size:50"   json:"address"`
-	Province   string `gorm:"province;size:7"   json:"province"`
-	City       string `gorm:"city;size:7"   json:"city"`
-	Area       string `gorm:"area;size:7"   json:"area"`
+	Province   uint   `gorm:"province;size:7"   json:"province"`
+	City       uint   `gorm:"city;size:7"   json:"city"`
+	Area       uint   `gorm:"area;size:7"   json:"area"`
 	Model
 }
 
