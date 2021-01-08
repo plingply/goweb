@@ -45,6 +45,10 @@
         Stdout = true
 
 
+[redis]
+    default = "119.29.133.60:6379,0,plingply95?idleTimeout=600"
+    cache   = "119.29.133.60:6379,goweb,plingply95?idleTimeout=600"
+
 #OSS
 [OSS]
     endpoint = "https://oss-cn-beijing.aliyuncs.com"
