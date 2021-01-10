@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2021-01-10 11:56:43
- * @LastEditTime: 2021-01-10 14:55:43
+ * @LastEditTime: 2021-01-10 16:54:38
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/wechat/wechat.go
@@ -51,7 +51,9 @@ func GetAccessToken() {
 		panic(err)
 	} else {
 		defer r.Close()
-		cache.Set("wechat_access_token", r.ReadAllString(), 0)
+		result := r.ReadAllString()
+		cache.Set("wechat_access_token", result, 0)
+		g.Log().Info("获取微信access_token:" + result)
 	}
 }
 

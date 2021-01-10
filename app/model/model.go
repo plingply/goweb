@@ -6,6 +6,7 @@ import (
 
 	"github.com/gogf/gf/frame/g"
 	"github.com/jinzhu/gorm"
+	"go.uber.org/zap"
 )
 
 var db *gorm.DB
@@ -17,8 +18,24 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-func (logger Logger) Print(values ...interface{}) {
-	g.Log("sqlogger").Error(values)
+func (logger Logger) Print(v ...interface{}) {
+
+	switch v[0] {
+	case "sql":
+		var lmap = []interface{}{
+			"sql",
+			zap.String("module", "gorm"),
+			zap.String("type", "sql"),
+			zap.Any("src", v[1]),
+			zap.Any("duration", v[2]),
+			zap.Any("sql", v[3]),
+			zap.Any("values", v[4]),
+			zap.Any("rows_returned", v[5]),
+		}
+		g.Log("sqlogger").Print(lmap)
+	case "log":
+		g.Log("sqlogger").Info(zap.Any("gorm", v[2]))
+	}
 }
 
 func init() {
@@ -49,7 +66,7 @@ func initDBtoDefault() {
 	db.SingularTable(true)        //表生成结尾不带s
 	// 启用Logger，显示详细日志
 	db.LogMode(true)
-	// db.SetLogger(Logger{})
+	db.SetLogger(Logger{})
 	Createtable()
 }
 
