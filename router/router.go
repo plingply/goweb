@@ -15,6 +15,7 @@ import (
 	"goframe-web/app/api/subject"
 	"goframe-web/app/api/upload_file"
 	"goframe-web/app/api/user"
+	"goframe-web/app/api/wechat"
 	"goframe-web/app/api/zuowen"
 	"goframe-web/app/middleware"
 
@@ -37,6 +38,7 @@ func init() {
 		group.POST("/zuowen/info", zuowen.GetInfo)
 		group.POST("/peotry/info", peotry.GetInfo)
 		group.GET("/city/:parent_id", districts.GetDistrictsList)
+		group.GET("/wechat/verification", wechat.Verification)
 
 		group.Middleware(middleware.JWTAuth)
 

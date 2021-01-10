@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-24 15:35:54
- * @LastEditTime: 2021-01-08 11:35:42
+ * @LastEditTime: 2021-01-10 11:45:12
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/zuowen/zuowen.go
@@ -11,10 +11,9 @@ package zuowen
 import (
 	"goframe-web/app/model"
 	"goframe-web/app/service/zuowen"
-	"goframe-web/library/md5x"
+	"goframe-web/library/cache"
 	"goframe-web/library/response"
 
-	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -35,14 +34,10 @@ func SaveZuowen(r *ghttp.Request) {
 
 func GetZuowenList(r *ghttp.Request) {
 
+	cache.Get(r, r.RequestURI)
+
 	page := r.GetQueryUint("page")
 	limit := r.GetQueryUint("limit")
-
-	key := md5x.GetMD5String(r.RequestURI)
-
-	if v, err := g.Redis().DoVar("GET", key); err == nil && v.Map() != nil {
-		response.JsonExit(r, 0, "作文列表", v.Map())
-	}
 
 	if result, total, err := zuowen.GetZuowenList(page, limit); err != nil {
 		response.JsonExit(r, 1, err.Error())
@@ -54,8 +49,7 @@ func GetZuowenList(r *ghttp.Request) {
 		resp["page"] = page
 		resp["limit"] = limit
 
-		g.Redis().Do("SET", key, resp)
-		g.Redis().Do("EXPIRE", key, 60)
+		cache.Set(r.RequestURI, resp, 60)
 
 		response.JsonExit(r, 0, "作文列表", resp)
 	}
@@ -71,8 +65,8 @@ func GetZuowenLastId(r *ghttp.Request) {
 }
 
 func GetInfo(r *ghttp.Request) {
-	zuowen_id := r.GetFormUint("zuowen_id")
-	if data, err := zuowen.GetInfo(zuowen_id); err != nil {
+	zuowenID := r.GetFormUint("zuowen_id")
+	if data, err := zuowen.GetInfo(zuowenID); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	} else {
 		response.JsonExit(r, 0, "作文详情", data)

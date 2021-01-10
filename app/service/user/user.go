@@ -5,19 +5,18 @@ import (
 	"fmt"
 	"goframe-web/app/model"
 	"goframe-web/library/jwt"
-	"goframe-web/library/md5x"
 	"time"
 
 	jwtgo "github.com/dgrijalva/jwt-go"
-	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/util/gconv"
 )
 
-const (
-	SessionMark = "user_info"
-)
-
-// 用户注册
+/**
+ * @description: 用户注册
+ * @param {*SignUpParam} param
+ * @return {*}
+ */
 func SignUp(param *SignUpParam) (interface{}, error) {
 	// 昵称为非必需参数，默认使用账号名称
 	if param.Nickname == "" {
@@ -33,7 +32,9 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 	if err := gconv.Struct(param, &user); err != nil {
 		return nil, err
 	}
-	md5str := md5x.GetMD5String(user.Password)
+
+	md5str := gmd5.MustEncrypt(user.Password)
+
 	user.Password = md5str
 	result, err := user.Save()
 
@@ -49,7 +50,11 @@ func SignUp(param *SignUpParam) (interface{}, error) {
 	return result, err
 }
 
-// 检查账号是否存在
+/**
+ * @description: 检查账号是否存在
+ * @param {string} passport
+ * @return {*}
+ */
 func CheckPassport(passport string) (bool, uint) {
 	var user model.User
 	userInfo := user.GetUserInfoByPassport(passport)
@@ -59,23 +64,27 @@ func CheckPassport(passport string) (bool, uint) {
 	return false, 0
 }
 
-// 判断用户是否已经登录
-func IsSignedIn(session *ghttp.Session) bool {
-	return session.Contains(SessionMark)
-}
-
-// 更新用户信息
+/**
+ * @description: 更新用户信息
+ * @param {uint} id
+ * @param {map[string]interface{}} reqMap
+ * @return {*}
+ */
 func Update(id uint, reqMap map[string]interface{}) error {
 	lu, err := GetUserInfo(id)
 	if err != nil {
 		return err
 	}
-	reqMap["password"] = md5x.GetMD5String(reqMap["password"].(string))
+	reqMap["password"] = gmd5.MustEncrypt(reqMap["password"])
 	_, err = lu.Update(reqMap)
 	return err
 }
 
-// 获得用户信息详情
+/**
+ * @description: 获得用户信息详情
+ * @param {uint} id
+ * @return {*}
+ */
 func GetUserInfo(id uint) (*model.UserRoles, error) {
 	var user model.UserRoles
 	if id == 0 {
@@ -85,7 +94,12 @@ func GetUserInfo(id uint) (*model.UserRoles, error) {
 	return result, err
 }
 
-// 登录系统
+/**
+ * @description: 登录系统
+ * @param {string} passport
+ * @param {string} password
+ * @return {*}
+ */
 func Login(passport string, password string) (token string, err error) {
 
 	if passport == "" || password == "" {
@@ -97,7 +111,7 @@ func Login(passport string, password string) (token string, err error) {
 	if userInfo.Id == 0 {
 		return "", errors.New("用户不存在")
 	}
-	password = md5x.GetMD5String(password)
+	password = gmd5.MustEncrypt(password)
 	if userInfo.Password != password {
 		return "", errors.New("账号或密码错误")
 	}
@@ -132,7 +146,11 @@ func Login(passport string, password string) (token string, err error) {
 	return
 }
 
-// 退出
+/**
+ * @description: 退出
+ * @param {uint} userid
+ * @return {*}
+ */
 func Signout(userid uint) error {
 	// 更新 token
 	var usertoken model.UserToken

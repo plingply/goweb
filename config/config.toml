@@ -56,3 +56,7 @@
     accessKeyId = "LTAITTDGsu8PM4kG"
     accessKeySecret = "Yo7ZGScBuHv5Gib3rVUF1SRXRuXAh4"
     bucketName = "xinxin950618"
+
+#WECHAT
+[wechat]
+    token = "PLINGPLYCHANGMMYEARMONTHS"
