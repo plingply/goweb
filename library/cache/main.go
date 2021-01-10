@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2021-01-10 11:37:51
- * @LastEditTime: 2021-01-10 11:41:15
+ * @LastEditTime: 2021-01-10 13:45:20
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/library/cache/main.go
@@ -27,5 +27,7 @@ func Get(r *ghttp.Request, keys interface{}) {
 func Set(keys interface{}, value interface{}, time uint) {
 	key := gmd5.MustEncrypt(keys)
 	g.Redis().Do("SET", key, value)
-	g.Redis().Do("EXPIRE", key, time)
+	if time > 0 {
+		g.Redis().Do("EXPIRE", key, time)
+	}
 }

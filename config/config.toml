@@ -60,3 +60,5 @@
 #WECHAT
 [wechat]
     token = "PLINGPLYCHANGMMYEARMONTHS"
+    appid = "wx5c96b11e8a53a173"
+    appsecret = "0d9b94eebf4eafcbfb180dda71e0b868"
