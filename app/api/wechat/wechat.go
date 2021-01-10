@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2021-01-10 11:56:43
- * @LastEditTime: 2021-01-10 13:19:07
+ * @LastEditTime: 2021-01-10 13:25:27
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/wechat/wechat.go
@@ -30,8 +30,12 @@ func Verification(r *ghttp.Request) {
 
 	fmt.Println(data, token)
 
-	// _ := data.CheckSignature(token)
-	r.Response.WriteExit(true)
+	result := data.CheckSignature(token)
+	if result {
+		r.Response.WriteExit(data.EchoStr)
+	} else {
+		r.Response.WriteExit(false)
+	}
 }
 
 type messageEntity struct {
