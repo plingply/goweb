@@ -19,7 +19,7 @@ func GetDB() *gorm.DB {
 }
 
 func (logger Logger) Print(v ...interface{}) {
-
+	g.Log("sqlogger").Info("sql-log:", v)
 	switch v[0] {
 	case "sql":
 		var lmap = []interface{}{
