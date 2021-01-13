@@ -40,13 +40,15 @@ func init() {
 		group.GET("/city/:parent_id", districts.GetDistrictsList)
 		group.GET("/wechat/verification", wechat.Verification)
 
-		group.Middleware(middleware.JWTAuth)
-
-		group.GET("/user/info", user.Info)
-		group.POST("/signout", user.Signout)
-		group.POST("/user/update", user.UpdateInfo)
+		group.Group("/user", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/info", user.Info)
+			group.POST("/signout", user.Signout)
+			group.POST("/update", user.UpdateInfo)
+		})
 
 		group.Group("/school", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
 			group.GET("/list", school_user.GetSchoolList)
 			group.POST("/create", school.CreateSchool)
 			group.GET("/campus/list", campus.GetCampusList)
@@ -55,46 +57,73 @@ func init() {
 			group.POST("/campus/create", campus.CreateCampus)
 		})
 
-		group.GET("/teacher/list", school_user.GetTeacherList)
-		group.POST("/teacher/update", school_user.UpdateTeacher)
-		group.POST("/teacher/create", school_user.CreateTeacher)
+		s.Group("/teacher", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", school_user.GetTeacherList)
+			group.POST("/update", school_user.UpdateTeacher)
+			group.POST("/create", school_user.CreateTeacher)
+		})
 
-		group.GET("/class/list", class.GetClassList)
-		group.GET("/class/simple/list", class.GetClassSimpleList)
-		group.GET("/class/info", class.GetClassInfo)
-		group.POST("/class/update", class.UpdateClass)
-		group.POST("/class/create", class.CreateClass)
-		group.GET("/class/member/list", class_member.GetClassMemeberList)
-		group.POST("/class/member/create", class_member.CreateClassMemeber)
-		group.POST("/class/member/leave", class_member.LeaveClassMember)
+		s.Group("/class", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", class.GetClassList)
+			group.GET("/simple/list", class.GetClassSimpleList)
+			group.GET("/info", class.GetClassInfo)
+			group.POST("/update", class.UpdateClass)
+			group.POST("/create", class.CreateClass)
+			group.GET("/member/list", class_member.GetClassMemeberList)
+			group.POST("/member/create", class_member.CreateClassMemeber)
+			group.POST("/member/leave", class_member.LeaveClassMember)
+		})
 
-		group.GET("/student/list", student.GetStudentList)
-		group.POST("/student/update", student.UpdateStudent)
-		group.POST("/student/create", student.CreateStudent)
+		s.Group("/student", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", student.GetStudentList)
+			group.POST("/update", student.UpdateStudent)
+			group.POST("/create", student.CreateStudent)
+			group.POST("/student/card/activate", student_card.ActivateCard)
+		})
 
-		group.GET("/subject/list", subject.GetSubjectList)
-		group.POST("/subject/update", subject.UpdateSubject)
-		group.POST("/subject/create", subject.CreateSubject)
+		s.Group("/subject", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", subject.GetSubjectList)
+			group.POST("/update", subject.UpdateSubject)
+			group.POST("/create", subject.CreateSubject)
+		})
 
-		group.GET("/card/list", card.GetCardList)
-		group.GET("/card/simple/list", card.GetCardSimpleList)
-		group.POST("/card/update", card.UpdateCard)
-		group.POST("/card/create", card.CreateCard)
+		s.Group("/card", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", card.GetCardList)
+			group.GET("/simple/list", card.GetCardSimpleList)
+			group.POST("/update", card.UpdateCard)
+			group.POST("/create", card.CreateCard)
+		})
 
-		group.POST("/upload/file", upload_file.UploadFile)
+		s.Group("/upload", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.POST("/file", upload_file.UploadFile)
+		})
 
-		group.POST("/zuowen/sync", zuowen.SaveZuowen)
-		group.GET("/zuowen/list", zuowen.GetZuowenList)
-		group.GET("/zuowen/lastid", zuowen.GetZuowenLastId)
+		s.Group("/zuowen", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.POST("/sync", zuowen.SaveZuowen)
+			group.GET("/list", zuowen.GetZuowenList)
+			group.GET("/lastid", zuowen.GetZuowenLastId)
+		})
 
-		group.POST("/peotry/sync", peotry.CreatePeotry)
-		group.GET("/peotry/lastid", peotry.GetPeotryLastId)
-		group.GET("/peotry/list", peotry.GetPeotryList)
+		s.Group("/peotry", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.POST("/sync", peotry.CreatePeotry)
+			group.GET("/lastid", peotry.GetPeotryLastId)
+			group.GET("/list", peotry.GetPeotryList)
+		})
 
-		group.GET("/course/list", course.GetCourseList)
-		group.POST("/course/check", course.CheckCourse)
-		group.POST("/course/add", course.AddCourse)
+		s.Group("/course", func(group *ghttp.RouterGroup) {
+			group.Middleware(middleware.JWTAuth)
+			group.GET("/list", course.GetCourseList)
+			group.POST("/check", course.CheckCourse)
+			group.POST("/add", course.AddCourse)
+		})
 
-		group.POST("/student/card/activate", student_card.ActivateCard)
 	})
 }
