@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2020-12-24 15:35:54
- * @LastEditTime: 2021-01-22 12:32:15
+ * @LastEditTime: 2021-01-22 12:49:52
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/app/api/zuowen/zuowen.go
@@ -35,9 +35,10 @@ func SaveZuowen(r *ghttp.Request) {
 func GetZuowenList(r *ghttp.Request) {
 
 	result, _ := cache.Get(r, r.RequestURI)
+	results := result.Map()
 
-	if result.Map() != nil {
-		response.JsonExit(r, 0, "作文列表-cache", result)
+	if results != nil {
+		response.JsonExit(r, 0, "作文列表-cache", results)
 	}
 
 	page := r.GetQueryUint("page")
