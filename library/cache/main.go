@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2021-01-10 11:37:51
- * @LastEditTime: 2021-01-22 11:33:17
+ * @LastEditTime: 2021-01-22 12:33:46
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/library/cache/main.go
@@ -17,7 +17,8 @@ import (
 
 func Get(r *ghttp.Request, keys interface{}) (interface{}, error) {
 	key := gmd5.MustEncrypt(keys)
-	return g.Redis().DoVar("GET", key)
+	result, err := g.Redis().DoVar("GET", key)
+	return result.Map(), err
 }
 
 func Set(keys interface{}, value interface{}, time uint) {
