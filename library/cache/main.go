@@ -1,7 +1,7 @@
 /*
  * @Author: 彭林
  * @Date: 2021-01-10 11:37:51
- * @LastEditTime: 2021-01-10 13:45:20
+ * @LastEditTime: 2021-01-22 11:33:17
  * @LastEditors: 彭林
  * @Description:
  * @FilePath: /goweb/library/cache/main.go
@@ -10,18 +10,14 @@
 package cache
 
 import (
-	"goframe-web/library/response"
-
 	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
-func Get(r *ghttp.Request, keys interface{}) {
+func Get(r *ghttp.Request, keys interface{}) (interface{}, error) {
 	key := gmd5.MustEncrypt(keys)
-	if v, err := g.Redis().DoVar("GET", key); err == nil && v.Map() != nil {
-		response.JsonExit(r, 0, "作文列表", v.Map())
-	}
+	return g.Redis().DoVar("GET", key)
 }
 
 func Set(keys interface{}, value interface{}, time uint) {
